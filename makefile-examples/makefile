@@ -10,7 +10,7 @@ DEBUG: clean $(EXECUTABLE)
 endif
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $(EXECUTABLE)
+	$(CC) $(OBJECTS) -o $(EXECUTABLE)
 
 main.o: main.c http.h ping.h
 	$(CC) $(CFLAGS) -c main.c
