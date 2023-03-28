@@ -1,8 +1,8 @@
 CC = gcc
-CFLAGS = 
+CFLAGS = -Wall -ansi -pedantic
 LDFLAGS = -lm
-OBJECTS = numbers.o order.o
-EXECUTABLE = number
+OBJECTS = arrays.o
+EXECUTABLE = arrays
 
 ifdef DEBUG
 CFLAGS += -g -DDEBUG
@@ -12,11 +12,8 @@ endif
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $(EXECUTABLE)
 
-numbers.o: numbers.c order.h
-	$(CC) $(CFLAGS) -c numbers.c
-
-order.o: order.c order.h
-	$(CC) $(CFLAGS) -c order.c
+arrays.o: arrays.h arrays.c
+	$(CC) $(CFLAGS) -c arrays.c
 
 clean:
 	rm -f $(EXECUTABLE) *.o 

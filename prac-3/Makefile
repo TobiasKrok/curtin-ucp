@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = 
+CFLAGS = -Wall -ansi -pedantic
 LDFLAGS = -lm
 OBJECTS = numbers.o order.o
 EXECUTABLE = number
