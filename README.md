@@ -46,6 +46,9 @@
   - [Object files](#object-files)
   - [Linking](#linking)
   - [Summary](#summary)
+- [Pointers](#pointers)
+  - [Stack memory](#stack-memory)
+  - [Heap](#heap)
 - [Makefile](#makefile)
 
 
@@ -221,6 +224,99 @@ This diagram shows the different stages involved in the process, including:
 
 This process is critical to the development and execution of software and involves several different tools and components working together to create a functional program.
 
+# Pointers
+
+Functions are stored in code segments, stored as machine code
+Global storage stores global variables, local static variable and string literals
+Each byte has a unique sequential address
+
+Always give value to pointers/variables. Otherwise they can be allocated to other values in memory
+When a value occupies multiple addresses, it will point to the first byte
+
+Dereferencing get the value of where the pointer is pointing to. Basically look up what is at the memory adress
+
+HUsk å øv på dereferncing og ampersand
+
+L values
+```
+int x = 4
+int y = 5
+int* x
+```
+
+```c
+int x; (int)
+&x (ptr*)
+int* ptr (ptr*)
+*x(int) -- dereferencing
+
+*(x&) -- find adress of X and then dereference to get the value
+
+int *ptr2;
+&ptr2 (double ptr*)
+
+```
+## Stack memory
+
+Registers memory
+## Heap
+Stack is allocated by declaring a variable. Heap is declared by callin malloc(). OS finds memory and grants your program to access it. Stays in memoery until you free it. Every time malloc is called, you must free it.
+
+ptr = (int*)malloc(sizeof(int))
+
+Valgrind
+free(ptr)
+ptr = NULL;
+
+Heap is used mainly for dynamic allocation of memory. 
+
+# Arrays
+
+Fixed sized arrays: `int arr[10]`
+
+## Array length
+In C89, array lenghts must be hard coded and known before compilation. Only C99 and above is dynamic arrays (with limitations)
+
+You can use `#DEFINE LEN 10`
+
+## Bounds checking
+C will not stop you from going out of bounds. If you have an array of size 10 then it will not stop you from accessing 11th. It will access memory outside of your array 
+
+## Array initialization
+
+Use for loops or `arr[LEN] = {1,2,3,4}`
+
+`memset` can also be used: `memset(array, 0, LENGTH * sizeof(int));`
+
+
+
+## malloc array!!
+
+Use malloc array, you need to know how big the array is.
+
+## calloc()
+THis is recommended. Allocates the memory and zeroes al the bytes in memory. You are guaranteeing that what you alloc is zeroed so there are no garbage values
+
+## memcpy()
+Figure out why you need it
+
+## 2D arrays
+
+Malloc 2D array.
+
+Use pointer to another pointer. They are 
+```c
+#define ROWS 10
+#define COLUMNS 10
+int** arr
+arr = (int**)malloc(sizeof(int*) * ROWS)
+
+int i;
+
+for(i = 0; i < ROWs; i++) {
+  arr[i] = (int*)malloc(sizeof(int) * COLS)
+}
+```
 # Makefile
 
 See week 2 for example on makefile
