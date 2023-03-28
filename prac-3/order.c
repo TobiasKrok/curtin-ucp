@@ -32,3 +32,6 @@ void descending3(int *x, int *y, int *z) {
     *y = temp2;
     *x = *z;
 }
+
+
+
