@@ -47,8 +47,27 @@
   - [Linking](#linking)
   - [Summary](#summary)
 - [Pointers](#pointers)
+- [Arrays](#arrays)
+  - [Declaring Arrays](#declaring-arrays)
+  - [Bounds checking](#bounds-checking)
+  - [Array length](#array-length)
+  - [Accessing Array Elements](#accessing-array-elements)
+- [Function Pointers](#function-pointers)
+  - [Declaring Function Pointers](#declaring-function-pointers)
+  - [Assigning Functions to Function Pointers](#assigning-functions-to-function-pointers)
+  - [Calling Functions Using Function Pointers](#calling-functions-using-function-pointers)
   - [Stack memory](#stack-memory)
   - [Heap](#heap)
+- [Arrays](#arrays-1)
+  - [Array initialization](#array-initialization)
+    - [malloc()](#malloc)
+      - [1D Array](#1d-array)
+      - [2D array](#2d-array)
+  - [calloc()](#calloc)
+  - [memcpy()](#memcpy)
+  - [2D arrays](#2d-arrays)
+- [typedef / struct](#typedef--struct)
+- [function pointers](#function-pointers-1)
 - [Makefile](#makefile)
 
 
@@ -225,6 +244,86 @@ This diagram shows the different stages involved in the process, including:
 This process is critical to the development and execution of software and involves several different tools and components working together to create a functional program.
 
 # Pointers
+Pointers are variables that store the memory address of another variable. They are used to manipulate and access data indirectly, and are an essential feature of the C language. In C89, pointers are declared using the asterisk (*) symbol.
+
+Example:
+```c
+int main() {
+  int x = 10;  // declare an integer variable
+  int *ptr;    // declare a pointer to an integer
+  
+  ptr = &x;    // assign the address of x to ptr
+  
+  printf("The value of x is %d\n", x);
+  printf("The address of x is %p\n", &x);
+  printf("The value of ptr is %p\n", ptr);
+  printf("The value of the variable pointed to by ptr is %d\n", *ptr);
+  
+  return 0;
+}
+
+```
+In this example, we declare an integer variable x and a pointer to an integer ptr. We then assign the address of x to ptr using the address-of operator (&). This means that ptr now "points to" x.
+
+We can then use ptr to indirectly access the value of x using the dereference operator (*). So *ptr gives us the value of the variable pointed to by ptr, which is the same as the value of x.
+
+
+# Arrays
+An array is a collection of elements of the same data type, stored in contiguous memory locations.
+
+
+## Declaring Arrays
+To declare an array, specify the type, followed by the array name and the size of the array in square brackets.
+
+
+## Bounds checking
+C will not stop you from going out of bounds. If you have an array of size 10 then it will not stop you from accessing 11th. It will access memory outside of your array 
+
+```c
+int numbers[5]; // declares an array of 5 integers
+```
+## Array length
+In C89, array lenghts must be hard coded and known before compilation. Only C99 and above is dynamic arrays (with limitations)
+
+## Accessing Array Elements
+To access elements in an array, use the array name followed by the index of the element in square brackets.
+
+```c
+numbers[0] = 10; // sets the first element of the array to 10
+## Relationship between Arrays and Pointers
+In C, an array name is essentially a constant pointer to the first element of the array. This means that you can use pointers to access and manipulate array elements.
+
+```c
+int *ptr = numbers; // ptr points to the first element of the array
+*ptr = 20; // sets the first element of the array to 20
+```
+# Function Pointers
+A function pointer is a pointer that points to a function, rather than a variable. Function pointers are useful for passing functions as arguments to other functions, or for creating callbacks and event-driven programming.
+
+## Declaring Function Pointers
+To declare a function pointer, specify the return type, followed by an asterisk, the function pointer name, and the function's parameter list in parentheses.
+
+```c
+int (*func_ptr)(int, int); // declares a function pointer to a function that takes two int arguments and returns an int
+```
+## Assigning Functions to Function Pointers
+To assign a function to a function pointer, use the name of the function without parentheses.
+
+```c
+int add(int a, int b) {
+    return a + b;
+}
+func_ptr = add; // func_ptr now points to the add function
+```
+## Calling Functions Using Function Pointers
+To call a function using a function pointer, use the function pointer name followed by the arguments in parentheses.
+
+```
+int result = func_ptr(3, 4); // calls the add function and stores the result in the 
+```
+
+
+
 
 Functions are stored in code segments, stored as machine code
 Global storage stores global variables, local static variable and string literals
@@ -233,29 +332,7 @@ Each byte has a unique sequential address
 Always give value to pointers/variables. Otherwise they can be allocated to other values in memory
 When a value occupies multiple addresses, it will point to the first byte
 
-Dereferencing get the value of where the pointer is pointing to. Basically look up what is at the memory adress
 
-HUsk å øv på dereferncing og ampersand
-
-L values
-```
-int x = 4
-int y = 5
-int* x
-```
-
-```c
-int x; (int)
-&x (ptr*)
-int* ptr (ptr*)
-*x(int) -- dereferencing
-
-*(x&) -- find adress of X and then dereference to get the value
-
-int *ptr2;
-&ptr2 (double ptr*)
-
-```
 ## Stack memory
 
 Registers memory
@@ -274,13 +351,9 @@ Heap is used mainly for dynamic allocation of memory.
 
 Fixed sized arrays: `int arr[10]`
 
-## Array length
-In C89, array lenghts must be hard coded and known before compilation. Only C99 and above is dynamic arrays (with limitations)
+
 
 You can use `#DEFINE LEN 10`
-
-## Bounds checking
-C will not stop you from going out of bounds. If you have an array of size 10 then it will not stop you from accessing 11th. It will access memory outside of your array 
 
 ## Array initialization
 
@@ -288,18 +361,172 @@ Use for loops or `arr[LEN] = {1,2,3,4}`
 
 `memset` can also be used: `memset(array, 0, LENGTH * sizeof(int));`
 
+### malloc()
+Using `malloc()` with arrays allows you to allocate memory dynamically during the runtime of your program. Here are some useful examples:
 
+#### 1D Array
 
-## malloc array!!
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-Use malloc array, you need to know how big the array is.
+int main() {
+    int n, i;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    int *arr = (int *)malloc(n * sizeof(int));
+
+    if (arr == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    for (i = 0; i < n; i++) {
+        printf("Enter element %d: ", i);
+        scanf("%d", &arr[i]);
+    }
+
+    printf("The elements of the array are: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    free(arr);
+    return 0;
+}
+```
+
+#### 2D array
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int rows, cols, i, j;
+
+    printf("Enter the number of rows: ");
+    scanf("%d", &rows);
+    printf("Enter the number of columns: ");
+    scanf("%d", &cols);
+
+    int **matrix = (int **)malloc(rows * sizeof(int *));
+
+    if (matrix == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    for (i = 0; i < rows; i++) {
+        matrix[i] = (int *)malloc(cols * sizeof(int));
+        if (matrix[i] == NULL) {
+            printf("Memory allocation failed!\n");
+            return 1;
+        }
+    }
+
+    printf("Enter the elements of the matrix:\n");
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            printf("Enter element [%d][%d]: ", i, j);
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    printf("The elements of the matrix are:\n");
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    for (i = 0; i < rows; i++) {
+        free(matrix[i]);
+    }
+    free(matrix);
+    return 0;
+}
+
+```
+
 
 ## calloc()
 THis is recommended. Allocates the memory and zeroes al the bytes in memory. You are guaranteeing that what you alloc is zeroed so there are no garbage values
 
 ## memcpy()
-Figure out why you need it
+`memcpy()` is a useful function for copying memory from one location to another. It is part of the C standard library and can be found in the `string.h` header file. Some good use cases for `memcpy()` include:
 
+1. **Copying arrays or structs:** When you need to copy the contents of an array or a struct, memcpy() provides a fast and efficient way to do so.
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char name[50];
+    int age;
+    float salary;
+} Employee;
+
+int main() {
+    Employee e1 = {"John Doe", 30, 5000.0};
+    Employee e2;
+
+    memcpy(&e2, &e1, sizeof(Employee));
+
+    printf("Employee 2: Name = %s, Age = %d, Salary = %.2f\n", e2.name, e2.age, e2.salary);
+
+    return 0;
+}
+```
+2. **Memory management in dynamic arrays:** When you need to resize a dynamically allocated array, memcpy() can be used to copy the contents of the old array to a new, larger or smaller block of memory.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    int *arr = (int *)malloc(5 * sizeof(int));
+    int i;
+
+    for (i = 0; i < 5; i++) {
+        arr[i] = i + 1;
+    }
+
+    int *new_arr = (int *)malloc(10 * sizeof(int));
+    if (new_arr == NULL) {
+        printf("Memory allocation failed!\n");
+        free(arr);
+        return 1;
+    }
+
+    memcpy(new_arr, arr, 5 * sizeof(int));
+
+    for (i = 5; i < 10; i++) {
+        new_arr[i] = i + 1;
+    }
+
+    free(arr);
+    arr = new_arr;
+
+    for (i = 0; i < 10; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    free(arr);
+    return 0;
+}
+
+```
+3. **Buffer manipulation:** When working with I/O operations, such as reading from files, sockets, or other data streams, you often deal with buffers. memcpy() is useful for moving data within buffers, appending data to buffers, or copying data between buffers.
+
+**Optimizing performance:** memcpy() is often faster than manually copying data using a loop, especially for large blocks of memory, because it may utilize platform-specific optimizations or hardware acceleration when available.
+
+However, it's important to note that memcpy() does not handle overlapping memory regions properly. If you need to copy data between overlapping regions, use memmove() instead.
 ## 2D arrays
 
 Malloc 2D array.
@@ -317,6 +544,45 @@ for(i = 0; i < ROWs; i++) {
   arr[i] = (int*)malloc(sizeof(int) * COLS)
 }
 ```
+
+# typedef / struct
+`typedef struct` is a combination of two keywords in C: `typedef` and `struct`. This construct is used to create a new type definition for a structure, which makes it more convenient to use in your program.
+
+`struct`: A `struct` (short for "structure") is a composite data type in C that groups together variables of different data types under a single name. These variables are called members of the struct.
+
+`typedef`: The typedef keyword is used to create an alias for an existing type. It simplifies the code and makes it easier to read by allowing you to use a new name for a type that may be more descriptive or convenient.
+
+When `typedef` and `struct` are used together, they create a new type definition for a structure that can be used just like any other built-in type, without needing to use the struct keyword each time you declare a variable of that type.
+
+Example:
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    char name[50];
+    int age;
+    float salary;
+} Employee;
+
+int main() {
+    Employee e1;
+
+    // Assign values to the members of e1
+    snprintf(e1.name, sizeof(e1.name), "John Doe");
+    e1.age = 30;
+    e1.salary = 5000.0;
+
+    printf("Employee: Name = %s, Age = %d, Salary = %.2f\n", e1.name, e1.age, e1.salary);
+
+    return 0;
+}
+
+```
+
+# function pointers
+
+
 # Makefile
 
 See week 2 for example on makefile
