@@ -29,19 +29,12 @@ char **create_game(GameInput game_input)
     {
         for (i = 0; i < game_input.MAP_COL; i++)
         {
-            if (k == 0 || i == game_input.MAP_COL - 1 || i == 0 || k == game_input.MAP_ROW - 1)
-            {
-                map[k][i] = '*';
-            }
-            else
-            {
-                map[k][i] = ' ';
-            }
+            map[k][i] = ' ';
         }
     }
 
-    map[game_input.GOAL_ROW][game_input.GOAL_COL] = 'G';
-    map[game_input.PLAYER_ROW][game_input.PLAYER_COL] = 'P';
+    map[game_input.GOAL_ROW][game_input.GOAL_COL - 1] = 'G';
+    map[game_input.PLAYER_ROW][game_input.PLAYER_COL - 1] = 'P';
 
     return map;
 }
@@ -49,11 +42,24 @@ char **create_game(GameInput game_input)
 void print_map(char **map, GameInput game_input)
 {
     int i, k;
-    for (i = 0; i < game_input.MAP_ROW; i++)
+    for (i = 0; i < game_input.MAP_ROW + 2; i++)
     {
-        for (k = 0; k < game_input.MAP_COL; k++)
+        for (k = 0; k < game_input.MAP_COL + 2; k++)
         {
-            if (map[i][k] == 'G')
+            if (i == 0 || i == game_input.MAP_ROW + 1)
+            {
+                printf("* ");
+            }
+            else
+            {
+            }
+        }
+        printf("\n");
+    }
+}
+
+/*
+if (map[i][k] == 'G')
             {
                 setBackground("red");
                 printf("%c ", map[i][k]);
@@ -63,7 +69,4 @@ void print_map(char **map, GameInput game_input)
             {
                 printf("%c ", map[i][k]);
             }
-        }
-        printf("\n");
-    }
-}
+ */
