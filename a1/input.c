@@ -33,18 +33,18 @@ ValidationResult *validate_args(int argc, const GameInput input)
     /* Checks if player row and col is within specified map bounds
         Player can not spawn at the border of the map, that is why we do - 1 to account for border
      */
-    else if (within_bounds(input.MAP_ROW - 1, 1, input.PLAYER_ROW) == FALSE || within_bounds(input.MAP_COL - 1, 1, input.PLAYER_COL) == FALSE)
+    else if (within_bounds(input.MAP_ROW, 0, input.PLAYER_ROW) == FALSE || within_bounds(input.MAP_COL, 0, input.PLAYER_COL) == FALSE)
     {
         result->is_error = TRUE;
-        create_string(&result->error_message, "input error: player_row and player_col cannot be higher or lower than map_row and map_col \n or on the map border");
+        create_string(&result->error_message, "input error: player_row and player_col cannot be higher or lower than map_row and map_col (zero based)");
     }
     /* Checks if GOAL row and col is within specified map bounds
       Goal can not spawn at the border of the map, that is why we do - 1 to account for border
    */
-    else if (within_bounds(input.MAP_ROW - 1, 1, input.GOAL_ROW) == FALSE || within_bounds(input.MAP_COL - 1, 1, input.GOAL_COL) == FALSE)
+    else if (within_bounds(input.MAP_ROW, 0, input.GOAL_ROW) == FALSE || within_bounds(input.MAP_COL, 0, input.GOAL_COL) == FALSE)
     {
         result->is_error = TRUE;
-        create_string(&result->error_message, "input error: goal_row and goal_col cannot be higher or lower than map_row and map_col \n or on the map border");
+        create_string(&result->error_message, "input error: goal_row and goal_col cannot be higher or lower than map_row and map_col \n");
     }
     /* Cheks if the goal position is the same as player position*/
     else if (input.PLAYER_ROW == input.GOAL_ROW && input.PLAYER_COL == input.GOAL_COL)
