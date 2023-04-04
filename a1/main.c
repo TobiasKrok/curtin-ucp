@@ -13,6 +13,7 @@ int main(int argc, char **argv)
     */
     int *user_inputs;
     const GameInput *input;
+    int is_error = FALSE;
     ValidationResult *validation_result;
     Map *map;
 
@@ -33,17 +34,16 @@ int main(int argc, char **argv)
    */
     if (validation_result->is_error == TRUE)
     {
-
         printf("%s \n", validation_result->error_message);
-        free_validation_result(validation_result);
-        return 1;
+        is_error = TRUE; 
+    } else {
+            /* Game logic */
+        map = create_game(*input);
+        start_game(map, *input);
     }
     /* Free malloced vars used for validation */
     free(user_inputs);
     free_validation_result(validation_result);
 
-    /* Game logic */
-    map = create_game(*input);
-    start_game(map, *input);
-    return 0;
+    return is_error;
 }

@@ -96,9 +96,9 @@ void free_validation_result(ValidationResult *result)
 /* Helper function to create a string. We first malloc the passed string content then we copy the passed string
 into the malloced memory using strcpy
   */
-void create_string(char **destination, char *string)
+void create_string(char **destination, char *value)
 {
     /* We do + 1 to allocate memory for null character \0 */
-    *destination = (char *)malloc(strlen(string) + 1);
-    strcpy(*destination, string);
+    *destination = (char *)malloc(strlen(value) + 1);
+    strcpy(*destination, value);
 }

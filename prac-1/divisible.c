@@ -2,10 +2,12 @@
 #include <stdio.h>
 #include<unistd.h>
 
+#define zero 0
+
 int main()
 {
-    int n1 = 0;
-    int n2 = 0;
+    int n1 = zero;
+    int n2 = zero;
 
     while (n1 == 0 || n2 == 0)
     {
