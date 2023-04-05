@@ -19,18 +19,19 @@ int main(int argc, char **argv)
 
     /* Seed random */
     initRandom();
-    /* Convert argv to int array*/
+    /* Convert argv to int array, removing the first element (executable name)*/
     user_inputs = (int *)malloc((sizeof(int) * argc) - 1);
     convert_char_arr_to_int_arr(argv, user_inputs, argc, 1);
 
-    /*TODO: FREE*/
+    /* Create GameIbput struct based on the user input*/
     input = map_argv_to_game_input(user_inputs);
 #ifdef DEBUG
     printf("argc: %d, map_row: %d map_col: %d player_row: %d player_col: %d goal_row: %d goal_col: %d \n", argc, input->MAP_COL, input->MAP_ROW, input->PLAYER_ROW, input->PLAYER_COL, input->GOAL_ROW, input->GOAL_COL);
 #endif
+    /* Validate input and get the results*/
     validation_result = validate_args(argc, *input);
     /*
-   Stop the program if any arguments were invalid and print error, free any used memory
+    Print the error message if there is one, otherwise start the game
    */
     if (validation_result->is_error == TRUE)
     {
@@ -44,13 +45,15 @@ int main(int argc, char **argv)
         /* Initializes and creates the map based on input*/
         map = create_game(*input);
         /* Starts the game. It will loop until finished*/
-        start_game(map, *input);
+        start_game(map);
         printf("Game over! You win!!\n");
+
+        /* Free the game map, this is only needed if the game actually starts (ie no error)*/
+        free_map(map);
     }
     /* Free everything */
     free(input);
     free(user_inputs);
     free_validation_result(validation_result);
-    free_map(map);
     return is_error;
 }

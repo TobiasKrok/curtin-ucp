@@ -9,6 +9,10 @@ CFLAGS += -g -DDEBUG
 DEBUG: clean $(EXECUTABLE)
 endif
 
+ifdef PULL
+CFLAGS += -DPULL
+DEBUG: clean $(EXECUTABLE)
+endif
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $(EXECUTABLE)
