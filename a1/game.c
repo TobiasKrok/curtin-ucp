@@ -413,6 +413,7 @@ void start_game(Map *map)
 
     while (game_over == FALSE)
     {
+        system("clear");
         print_map(map);
         printf("%s\n", "Press w to move UP");
         printf("%s\n", "Press a to move LEFT");
@@ -444,10 +445,6 @@ void start_game(Map *map)
             system("clear");
             game_over = TRUE;
             print_map(map);
-        }
-        if (game_over == FALSE)
-        {
-            system("clear");
         }
     }
 }
