@@ -26,7 +26,7 @@ typedef struct input
 
 ValidationResult *validate_args(int argc, const GameInput input);
 void free_validation_result(ValidationResult *result);
-const GameInput *map_argv_to_game_input(int *argv);
+GameInput *map_argv_to_game_input(int *argv);
 void create_string(char **destination, char *string);
 int within_bounds(int high, int low, int n);
 

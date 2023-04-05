@@ -66,7 +66,7 @@ ValidationResult *validate_args(int argc, const GameInput input)
 
     Must be freed
 */
-const GameInput *map_argv_to_game_input(int *argv)
+GameInput *map_argv_to_game_input(int *argv)
 {
     GameInput *input = (GameInput *)malloc(sizeof(GameInput));
     input->MAP_ROW = argv[0];

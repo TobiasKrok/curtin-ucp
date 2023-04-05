@@ -11,11 +11,11 @@ int main(int argc, char **argv)
     /* This will hold inputs converted to int. We do argc - 1 because we omit the first element
     in argc which is the file name
     */
-    int *user_inputs;
-    const GameInput *input;
+    int *user_inputs = NULL;
+    GameInput *input;
     int is_error = FALSE;
-    ValidationResult *validation_result;
-    Map *map;
+    ValidationResult *validation_result = NULL;
+    Map *map = NULL;
 
     /* Seed random */
     initRandom();
@@ -35,15 +35,22 @@ int main(int argc, char **argv)
     if (validation_result->is_error == TRUE)
     {
         printf("%s \n", validation_result->error_message);
-        is_error = TRUE; 
-    } else {
-            /* Game logic */
-        map = create_game(*input);
-        start_game(map, *input);
+        is_error = TRUE;
     }
-    /* Free malloced vars used for validation */
+    else
+    {
+        /* Game logic */
+
+        /* Initializes and creates the map based on input*/
+        map = create_game(*input);
+        /* Starts the game. It will loop until finished*/
+        start_game(map, *input);
+        printf("Game over! You win!!\n");
+    }
+    /* Free everything */
+    free(input);
     free(user_inputs);
     free_validation_result(validation_result);
-
+    free_map(map);
     return is_error;
 }

@@ -7,14 +7,8 @@
 #include "random.h"
 #include "terminal.h"
 #include "game.h"
-/*
 
-* * * * * * *
-*           *
-*           *
-*           *
-* * * * * * *
-*/
+/* Private helper functions. These are not included in header file as should only be used in this file */
 
 /* Initializes the game by creating the map and placing the player, goal and box on the map*/
 Map *create_game(GameInput game_input)
@@ -82,7 +76,7 @@ Map *create_game(GameInput game_input)
     goal_pos.col = game_input.GOAL_COL;
 
     box_pos.row = box_row;
-    box_pos.col = box_row;
+    box_pos.col = box_col;
 
     /* Initialize properties of our map.*/
     map->map = arr;
@@ -124,6 +118,12 @@ void print_map(Map *map, GameInput game_input)
                     printf("%c ", map->map[i - 1][k - 1]);
                     setBackground("reset");
                 }
+                else if (map->map[i - 1][k - 1] == 'B' && map->box_pos.row == map->goal_pos.row && map->box_pos.col == map->goal_pos.col)
+                {
+                    setBackground("green");
+                    printf("%c ", map->map[i - 1][k - 1]);
+                    setBackground("reset");
+                }
                 else
                 {
                     printf("%c ", map->map[i - 1][k - 1]);
@@ -141,54 +141,179 @@ char get_input()
     disableBuffer();
     scanf(" %c", &c);
     enableBuffer();
-    system("clear");
     return c;
 }
 
-/* Checks if the potential move would be out of bounds*/
-int is_move_oob(Map *map, Direction direction) {
+/* Checks if the potential move would be out of bounds
+If the player is next to the box and the box is by the border, the player cannot move in that direction
+*/
+int is_move_oob(Map *map, Direction direction, int box_adjacent)
+{
     int is_oob = FALSE;
-
-    switch(direction) {
-        case UP:
-        /* If the player moves one row up */
-        if(map->player_pos.row - 1 < 0) {
+    switch (direction)
+    {
+    case UP:
+        /* If the player moves one row up  */
+        if (map->player_pos.row - 1 < 0 || (box_adjacent == TRUE && map->player_pos.row - 2 < 0))
+        {
             is_oob = TRUE;
         }
         break;
+    case DOWN:
+        /* If the player moves one row down */
+        if (map->player_pos.row + 1 > map->rows - 1 || (box_adjacent == TRUE && map->player_pos.row + 2 > map->rows - 1))
+        {
+            is_oob = TRUE;
+        }
+        break;
+    case LEFT:
+        /* If the player moves one column left */
+        if (map->player_pos.col - 1 < 0 || (box_adjacent == TRUE && map->player_pos.col - 2 < 0))
+        {
+            is_oob = TRUE;
+        }
 
+        break;
+    case RIGHT:
+        /* If the player moves one column right */
+        if (map->player_pos.col + 1 > map->columns - 1 || (box_adjacent == TRUE && map->player_pos.col + 2 > map->columns - 1))
+        {
+            is_oob = TRUE;
+        }
+        break;
+    default:
+        break;
     }
 
     return is_oob;
 }
-void move_player(Map *map, Direction direction)
-{
 
+/* Checks if box is next to player*/
+int is_box_adjacent(Map *map, Direction direction)
+{
+    int is_adjacent = FALSE;
     switch (direction)
     {
     case UP:
-    if(is_move_oob(map, direction) == FALSE) {
-
-        map->map[map->player_pos.row][map->player_pos.col] = ' ';
-        map->map[map->player_pos.row - 1][map->player_pos.col] = 'P';
-        map->player_pos.row -= 1;
-    }
-
+        /* If the player moves one row up and the box is one row up */
+        if (map->player_pos.row - 1 == map->box_pos.row && map->player_pos.col == map->box_pos.col)
+        {
+            is_adjacent = TRUE;
+        }
         break;
     case DOWN:
-      map->map[map->player_pos.row][map->player_pos.col] = ' ';
-        map->map[map->player_pos.row + 1][map->player_pos.col] = 'P';
-        map->player_pos.row += 1;
-    break;
-     case RIGHT:
-      map->map[map->player_pos.row][map->player_pos.col] = ' ';
-        map->map[map->player_pos.row][map->player_pos.col + 1] = 'P';
-        map->player_pos.col += 1;
-    break;
+        /* If the player moves one row down and the box is one row down */
+        if (map->player_pos.row + 1 == map->box_pos.row && map->player_pos.col == map->box_pos.col)
+        {
+            is_adjacent = TRUE;
+        }
+        break;
     case LEFT:
-      map->map[map->player_pos.row][map->player_pos.col] = ' ';
-        map->map[map->player_pos.row][map->player_pos.col - 1] = 'P';
-        map->player_pos.col -= 1;
+        /* If the player moves one column left and the box is one column left */
+        if (map->player_pos.col - 1 == map->box_pos.col && map->player_pos.row == map->box_pos.row)
+        {
+            is_adjacent = TRUE;
+        }
+
+        break;
+    case RIGHT:
+        /* If the player moves one column right and the box is one column right */
+        if (map->player_pos.col + 1 == map->box_pos.col && map->player_pos.row == map->box_pos.row)
+        {
+            is_adjacent = TRUE;
+        }
+        break;
+    default:
+        break;
+    }
+
+    return is_adjacent;
+}
+
+void move(Map *map, Direction direction, char c, Point *object, int no_replace)
+{
+    char current = map->map[object->row][object->col];
+    switch (direction)
+    {
+    case UP:
+        map->map[object->row][object->col] = no_replace ? current : ' ';
+        map->map[object->row - 1][object->col] = c;
+        object->row -= 1;
+        break;
+    case DOWN:
+        map->map[object->row][object->col] = current;
+        map->map[object->row + 1][object->col] = c;
+        object->row += 1;
+        break;
+    case LEFT:
+        map->map[object->row][object->col] = current;
+        map->map[object->row][object->col - 1] = c;
+        object->col -= 1;
+        break;
+    case RIGHT:
+        map->map[object->row][object->col] = ;
+        map->map[object->row][object->col + 1] = c;
+        object->col += 1;
+        break;
+
+    default:
+        break;
+    }
+}
+
+void move_player(Map *map, Direction direction)
+{
+
+    int pull = FALSE;
+#ifdef PULL
+    pull = TRUE;
+#endif
+
+    int box_adjacent = is_box_adjacent(map, direction);
+    switch (direction)
+    {
+    case UP:
+        if (is_move_oob(map, UP, box_adjacent) == FALSE)
+        {
+            if (box_adjacent == TRUE)
+            {
+                move(map, UP, 'B', &map->box_pos);
+            }
+            move(map, UP, 'P', &map->player_pos);
+        }
+        break;
+    case DOWN:
+        if (is_move_oob(map, direction, box_adjacent) == FALSE)
+        {
+            if (box_adjacent == TRUE)
+            {
+                move(map, DOWN, 'B', &map->box_pos);
+            }
+            move(map, DOWN, 'P', &map->player_pos);
+        }
+
+        break;
+    case RIGHT:
+        if (is_move_oob(map, direction, box_adjacent) == FALSE)
+        {
+            if (box_adjacent == TRUE)
+            {
+                move(map, RIGHT, 'B', &map->box_pos);
+            }
+            move(map, RIGHT, 'P', &map->player_pos);
+        }
+
+        break;
+    case LEFT:
+        if (is_move_oob(map, direction, box_adjacent) == FALSE)
+        {
+            if (box_adjacent == TRUE)
+            {
+                move(map, LEFT, 'B', &map->box_pos);
+            }
+            move(map, LEFT, 'P', &map->player_pos);
+        }
+        break;
     default:
         break;
     }
@@ -212,42 +337,39 @@ void start_game(Map *map, GameInput game_input)
         switch (input)
         {
         case 'w':
-        move_player(map, UP);
-        break;
+            move_player(map, UP);
+            break;
         case 's':
-        move_player(map, DOWN);
-        break;
+            move_player(map, DOWN);
+            break;
         case 'd':
-        move_player(map, RIGHT);
-        break;
+            move_player(map, RIGHT);
+            break;
         case 'a':
-        move_player(map, LEFT);
-        
+            move_player(map, LEFT);
+            break;
+        default:
+            break;
+        }
+
+        if (map->box_pos.row == map->goal_pos.row && map->box_pos.col == map->goal_pos.col)
+        {
+            game_over = TRUE;
+            print_map(map, game_input);
+        }
+        if (game_over == FALSE)
+        {
+            system("clear");
         }
     }
 }
 
-
-/*
-
-struct Struct1 {
-    int x;
-    int y;
+void free_map(Map *map)
+{
+    int i;
+    for (i = 0; i < map->rows; i++)
+    {
+        free(map->map[i]);
+    }
+    free(map->map);
 }
-
-
-struct Struct2 {
-    int z;
-    struct Struct1 other;
-}
-
-struct Struct2 blah;
-
-
-int *p = &blah.other.z;
-
-struct Struct1* pp = &blah.other;
-
-
-
-*/
