@@ -441,6 +441,7 @@ void start_game(Map *map)
         /* If the box is on the goal position, end the loop and print the map one last time*/
         if (map->box_pos.row == map->goal_pos.row && map->box_pos.col == map->goal_pos.col)
         {
+            system("clear");
             game_over = TRUE;
             print_map(map);
         }
