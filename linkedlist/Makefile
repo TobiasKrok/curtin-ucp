@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -ansi -pedantic
 LDFLAGS = -lm
 OBJECTS = linkedlist.o main.o
-EXECUTABLE = linkedlist
+EXECUTABLE = ll
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $(EXECUTABLE)

@@ -18,24 +18,17 @@ typedef struct point
     int row;
 } Point;
 
-
 typedef struct input
 {
     Point box_pos;
     Point player_pos;
     Point goal_pos;
-    Point* walls_pos; /*  Array of walls */
-    int wall_size;
+    Point *walls_pos; /*  Array of walls */
+    int walls_count;
     int rows;
     int cols;
 } GameInput;
 
-typedef struct loadresult {
-    OperationResult *result;
-    GameInput *game_input;
-} FileLoadResult;
-
-
-FileLoadResult read_map_file(char* argv);
-OperationResult validate_args(int argc, char* argv);
+OperationResult read_map_file(char **argv, GameInput *input);
+OperationResult validate_args(int argc, char **argv);
 #endif

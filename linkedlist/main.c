@@ -1,18 +1,19 @@
 #include "linkedlist.h"
 #include <stdio.h>
 #include <stdlib.h>
-int main() {
+int main()
+{
 
     int i;
-    LinkedList* linkedList = createLinkedList();
-    for(i = 0; i < 10; i ++) {
-        int* data = (int*)malloc(sizeof(int));
+    LinkedList *linkedList = ll_create();
+    for (i = 0; i < 10; i++)
+    {
+        int *data = (int *)malloc(sizeof(int));
         *data = i;
-        insertStart(linkedList, data);
+        ll_insert_last(linkedList, data);
     }
-    removeStart(linkedList);
-    removeStart(linkedList);
-    removeStart(linkedList);
+    ll_remove_last(linkedList);
+    ll_remove_last(linkedList);
 
     printf("%d \n", linkedList->size);
     return 0;

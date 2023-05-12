@@ -1,0 +1,1 @@
+Undoing move: P from (1, 7) to (1, 6)
