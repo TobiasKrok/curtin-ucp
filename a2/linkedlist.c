@@ -107,7 +107,7 @@ int ll_is_empty(LinkedList *list)
     return list->size == 0 || list == NULL || list->head == NULL;
 }
 
-#include <stdio.h>
+
 
 void writeLinkedListToFile(const LinkedList *list, const char *filename)
 {

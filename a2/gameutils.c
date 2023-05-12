@@ -199,25 +199,26 @@ void undo_move(Map *map)
     {
         Node *lastNode;
         Move *move;
+        /* Removes the last node in the move history and gets the data*/
         lastNode = ll_remove_last(map->move_history);
         move = (Move *)lastNode->data;
-        writeFormattedStringToFile("Undoing move: %c from (%d, %d) to (%d, %d)\n", move->object_char, move->to->row, move->to->col, move->from->row, move->from->col);
-
-        if (move->is_chained == TRUE)
-        {
-            writeFormattedStringToFile("Move was chained, undoing chained move\n");
-            undo_move(map);
-        }
-
+    
+        /* move.to is now the position we are moving from. We set the previous character (old_char) at this position */
         map->map[move->to->row][move->to->col] = move->old_char;
+        /* move.from is the position we wanto move to. Here we set the equivalent character to the object we are moving at this position */
         map->map[move->from->row][move->from->col] = move->object_char;
+        /* Update the objects's position. This will be a pointer to the our map struct*/
         move->object->row = move->from->row;
         move->object->col = move->from->col;
+        writeFormattedStringToFile("UNDO: old char: %c obj char: %c \n", move->old_char, move->object_char);
 
         /* Recursively undo moves of chained moves. The top node will be freed last as it goes through the
         recursion stack */
-
-        /* FIXME: Update*/
+        if (move->is_chained == TRUE)
+        {
+            undo_move(map);
+        }
+        /* Free removed node and old move*/
         free(move->from);
         free(move->to);
         free(move);
@@ -233,6 +234,7 @@ void undo_move(Map *map)
  * @param direction The direction in which the object should be moved, can be UP, DOWN, LEFT or RIGHT
  * @param c The char that should be set at the new position
  * @param object A pointer to an object on the map, like the player or box. This will be updated with the new posotion
+ * @param link_prevous_move Whether or not the move should be linked to the previous move in the move history
  *
  * @returns void
  */
@@ -243,17 +245,27 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
         This will only happen if the player moves to the position of the goal
     */
     char replacement = object->col == map->goal_pos.col && object->row == map->goal_pos.row ? 'G' : ' ';
+    /* Initialize movement structs that will be stored in the move history linked list*/
     Point *old_pos = (Point *)malloc(sizeof(Point));
     Point *new_pos = (Point *)malloc(sizeof(Point));
     Move *move = (Move *)malloc(sizeof(Move));
-
+    /* Store the old position, i.e the position we are moving from*/
     old_pos->row = object->row;
     old_pos->col = object->col;
     move->from = old_pos;
-    move->old_char = replacement;
+    /* Set the old char*/
+    move->old_char = map[];
+    /* Store the object point */
     move->object = object;
+    /* Store the object character*/
     move->object_char = c;
+    /* Is chained tells if this move is chained to the previous move. 
+    If the player moves the box, the player move will be chained to the box move (we move the box before the player 
+    so the player move will be last in the list and be chained to the box move)
+    */
     move->is_chained = link_previous_move;
+
+    writeFormattedStringToFile("old char: %c obj char: %c \n", move->old_char, move->object_char);
     switch (direction)
 
     {
@@ -267,7 +279,7 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
         map->map[new_pos->row][new_pos->col] = c;
         /* Updates the object position*/
         object->row -= 1;
-
+        /* Insert the move into the box history*/
         ll_insert_last(map->move_history, move);
         break;
     case DOWN:
@@ -278,7 +290,6 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
         map->map[object->row + 1][object->col] = c;
         object->row += 1;
         ll_insert_last(map->move_history, move);
-
         break;
     case LEFT:
         new_pos->row = object->row;
@@ -288,7 +299,6 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
         map->map[object->row][object->col - 1] = c;
         object->col -= 1;
         ll_insert_last(map->move_history, move);
-
         break;
     case RIGHT:
         new_pos->row = object->row;
@@ -298,7 +308,6 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
         map->map[object->row][object->col + 1] = c;
         object->col += 1;
         ll_insert_last(map->move_history, move);
-
         break;
 
     default:

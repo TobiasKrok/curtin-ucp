@@ -36,7 +36,6 @@ int get_file_len(FILE *fptr)
 
 OperationResult read_map_file(char **argv, GameInput *input)
 {
-
     OperationResult op_result = {FALSE, ""};
 
     FILE *fptr;

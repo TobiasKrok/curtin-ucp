@@ -81,9 +81,9 @@ void move_object(Map *map, Direction direction)
         {
             if (box_adjacent == TRUE)
             {
-                move(map, UP, 'B', &map->box_pos, TRUE);
+                move(map, UP, 'B', &map->box_pos, FALSE);
             }
-            move(map, UP, 'P', &map->player_pos, FALSE);
+            move(map, UP, 'P', &map->player_pos, box_adjacent);
         }
         break;
     case DOWN:
@@ -91,9 +91,9 @@ void move_object(Map *map, Direction direction)
         {
             if (box_adjacent == TRUE)
             {
-                move(map, DOWN, 'B', &map->box_pos, TRUE);
+                move(map, DOWN, 'B', &map->box_pos, FALSE);
             }
-            move(map, DOWN, 'P', &map->player_pos, FALSE);
+            move(map, DOWN, 'P', &map->player_pos, box_adjacent);
         }
 
         break;
@@ -102,10 +102,10 @@ void move_object(Map *map, Direction direction)
         {
             if (box_adjacent == TRUE)
             {
-                move(map, RIGHT, 'B', &map->box_pos, TRUE);
+                move(map, RIGHT, 'B', &map->box_pos, FALSE);
             }
 
-            move(map, RIGHT, 'P', &map->player_pos, FALSE);
+            move(map, RIGHT, 'P', &map->player_pos, box_adjacent);
         }
 
         break;
@@ -114,9 +114,9 @@ void move_object(Map *map, Direction direction)
         {
             if (box_adjacent == TRUE)
             {
-                move(map, LEFT, 'B', &map->box_pos, TRUE);
+                move(map, LEFT, 'B', &map->box_pos, FALSE);
             }
-            move(map, LEFT, 'P', &map->player_pos, FALSE);
+            move(map, LEFT, 'P', &map->player_pos, box_adjacent);
         }
         break;
     default:
