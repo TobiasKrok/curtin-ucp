@@ -202,7 +202,7 @@ void undo_move(Map *map)
         /* Removes the last node in the move history and gets the data*/
         lastNode = ll_remove_last(map->move_history);
         move = (Move *)lastNode->data;
-    
+
         /* move.to is now the position we are moving from. We set the previous character (old_char) at this position */
         map->map[move->to->row][move->to->col] = move->old_char;
         /* move.from is the position we wanto move to. Here we set the equivalent character to the object we are moving at this position */
@@ -253,14 +253,12 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     old_pos->row = object->row;
     old_pos->col = object->col;
     move->from = old_pos;
-    /* Set the old char*/
-    move->old_char = map[];
     /* Store the object point */
     move->object = object;
     /* Store the object character*/
     move->object_char = c;
-    /* Is chained tells if this move is chained to the previous move. 
-    If the player moves the box, the player move will be chained to the box move (we move the box before the player 
+    /* Is chained tells if this move is chained to the previous move.
+    If the player moves the box, the player move will be chained to the box move (we move the box before the player
     so the player move will be last in the list and be chained to the box move)
     */
     move->is_chained = link_previous_move;
@@ -272,6 +270,7 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     case UP:
         new_pos->row = object->row - 1;
         new_pos->col = object->col;
+        move->old_char = map->map[new_pos->row][new_pos->col];
         move->to = new_pos;
         /* Sets the current position to the replacement char, either G or ' '*/
         map->map[object->row][object->col] = replacement;
@@ -285,6 +284,7 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     case DOWN:
         new_pos->row = object->row + 1;
         new_pos->col = object->col;
+        move->old_char = map->map[new_pos->row][new_pos->col];
         move->to = new_pos;
         map->map[object->row][object->col] = replacement;
         map->map[object->row + 1][object->col] = c;
@@ -294,6 +294,8 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     case LEFT:
         new_pos->row = object->row;
         new_pos->col = object->col - 1;
+        move->old_char = map->map[new_pos->row][new_pos->col];
+
         move->to = new_pos;
         map->map[object->row][object->col] = replacement;
         map->map[object->row][object->col - 1] = c;
@@ -303,6 +305,8 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     case RIGHT:
         new_pos->row = object->row;
         new_pos->col = object->col + 1;
+        move->old_char = map->map[new_pos->row][new_pos->col];
+
         move->to = new_pos;
         map->map[object->row][object->col] = replacement;
         map->map[object->row][object->col + 1] = c;
