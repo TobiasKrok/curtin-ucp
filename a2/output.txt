@@ -13,3 +13,40 @@ old char:   obj char: P
 old char:   obj char: P 
 old char:   obj char: P 
 UNDO: old char:   obj char: P 
+old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: B 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: B 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: B 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: B 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: B 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: B 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 
+old char:   obj char: P 
+old char:   obj char: P 
+old char:   obj char: P 
+old char:   obj char: P 
+old char:   obj char: P 
+old char:   obj char: P 
+old char:   obj char: P 
+old char: < obj char: P 
+old char: old char: old char: old char: UNDO: old char: G obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char: G obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char: G obj char: P 
+UNDO: old char:   obj char: P 
+UNDO: old char:   obj char: P 

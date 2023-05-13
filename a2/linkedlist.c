@@ -104,40 +104,6 @@ void ll_insert_last(LinkedList *list, void *data)
 
 int ll_is_empty(LinkedList *list)
 {
-    return list->size == 0 || list == NULL || list->head == NULL;
+    return list == NULL  || list->size == 0|| list->head == NULL;
 }
 
-
-
-void writeLinkedListToFile(const LinkedList *list, const char *filename)
-{
-    FILE *file;
-    Node *current;
-    Move *moveData;
-
-    /* Open the file in append mode */
-    file = fopen(filename, "a");
-    if (file == NULL)
-    {
-        printf("Error opening file: %s\n", filename);
-        return;
-    }
-
-    /* Write the size of the linked list */
-    fprintf(file, "Linked List Size: %d\n", list->size);
-
-    /* Traverse the linked list and write the state of each node */
-    current = list->head;
-    while (current != NULL)
-    {
-        moveData = (Move *)current->data;
-        fprintf(file, "Move: (from: %d,%d, to: %d,%d, object: %d,%d, object_char: %c, old_char: %c, is_chained: %d)\n",
-                moveData->from->col, moveData->from->row, moveData->to->col, moveData->to->row,
-                moveData->object->col, moveData->object->row, moveData->object_char, moveData->old_char,
-                moveData->is_chained);
-        current = current->next;
-    }
-
-    /* Close the file */
-    fclose(file);
-}

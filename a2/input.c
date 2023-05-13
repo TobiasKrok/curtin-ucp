@@ -110,7 +110,10 @@ OperationResult read_map_file(char **argv, GameInput *input)
                 }
             }
         }
+        fclose(fptr);
     }
+
+
 
     return op_result;
 }

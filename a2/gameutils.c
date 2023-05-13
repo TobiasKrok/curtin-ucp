@@ -6,29 +6,6 @@
 #include "linkedlist.h"
 #include <stdarg.h>
 
-void writeFormattedStringToFile(const char *format, ...)
-{
-    FILE *file;
-    char filename[] = "output.txt";
-    char buffer[256];
-    va_list args;
-
-    file = fopen(filename, "a");
-    if (file == NULL)
-    {
-        printf("Error opening file: %s\n", filename);
-        return;
-    }
-
-    va_start(args, format);
-    vsprintf(buffer, format, args);
-    va_end(args);
-
-    fprintf(file, "%s", buffer);
-
-    fclose(file);
-}
-
 /**
  * Disables terminal input buffering and echoing in order to immediately
  * get user input. Input buffering means that it will store what you write into a buffer
@@ -210,10 +187,12 @@ void undo_move(Map *map)
         /* Update the objects's position. This will be a pointer to the our map struct*/
         move->object->row = move->from->row;
         move->object->col = move->from->col;
-        writeFormattedStringToFile("UNDO: old char: %c obj char: %c \n", move->old_char, move->object_char);
 
-        /* Recursively undo moves of chained moves. The top node will be freed last as it goes through the
-        recursion stack */
+        if(move->leave_trail) {
+            map->trail_map[move->to->row][move->from->col] = move->old_char;
+        }
+
+        /* Recursively undo moves of chained moves. The top node will be freed last as it unwinds the recursion stack */
         if (move->is_chained == TRUE)
         {
             undo_move(map);
@@ -224,6 +203,19 @@ void undo_move(Map *map)
         free(move);
         free(lastNode);
     }
+}
+
+void move_handler(Map *map, Move *move, char replacement) {
+
+        move->old_char = map->map[move->to->row][move->to->col];
+        /* Sets the current position to the replacement char, either G or ' '*/
+        map->map[move->from->row][move->from->col] = replacement;
+        /*Sets the char at the new position */
+        map->map[move->to->row][move->to->col] = move->object_char;
+
+        if(move->leave_trail) {
+            map->trail_map[move->from->row][move->to->col] = 'T';
+        }
 }
 
 /**
@@ -238,7 +230,7 @@ void undo_move(Map *map)
  *
  * @returns void
  */
-void move(Map *map, Direction direction, char c, Point *object, int link_previous_move)
+void move(Map *map, Direction direction, char c, Point *object, int link_previous_move, int leave_trail)
 {
     /* Which character we should set at the old position of the object
         If the old position was the goal, we want to make sure we set the G back to its spot
@@ -246,36 +238,30 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     */
     char replacement = object->col == map->goal_pos.col && object->row == map->goal_pos.row ? 'G' : ' ';
     /* Initialize movement structs that will be stored in the move history linked list*/
+
+    Move *move = (Move *)malloc(sizeof(Move));
     Point *old_pos = (Point *)malloc(sizeof(Point));
     Point *new_pos = (Point *)malloc(sizeof(Point));
-    Move *move = (Move *)malloc(sizeof(Move));
-    /* Store the old position, i.e the position we are moving from*/
-    old_pos->row = object->row;
     old_pos->col = object->col;
+    old_pos->row = object->row;
     move->from = old_pos;
-    /* Store the object point */
+    move->to = new_pos;
     move->object = object;
-    /* Store the object character*/
     move->object_char = c;
+
     /* Is chained tells if this move is chained to the previous move.
     If the player moves the box, the player move will be chained to the box move (we move the box before the player
     so the player move will be last in the list and be chained to the box move)
     */
     move->is_chained = link_previous_move;
-
-    writeFormattedStringToFile("old char: %c obj char: %c \n", move->old_char, move->object_char);
+    move->leave_trail = leave_trail;
     switch (direction)
 
     {
     case UP:
         new_pos->row = object->row - 1;
         new_pos->col = object->col;
-        move->old_char = map->map[new_pos->row][new_pos->col];
-        move->to = new_pos;
-        /* Sets the current position to the replacement char, either G or ' '*/
-        map->map[object->row][object->col] = replacement;
-        /*Sets the char at the new position */
-        map->map[new_pos->row][new_pos->col] = c;
+        move_handler(map, move,replacement);
         /* Updates the object position*/
         object->row -= 1;
         /* Insert the move into the box history*/
@@ -284,32 +270,21 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     case DOWN:
         new_pos->row = object->row + 1;
         new_pos->col = object->col;
-        move->old_char = map->map[new_pos->row][new_pos->col];
-        move->to = new_pos;
-        map->map[object->row][object->col] = replacement;
-        map->map[object->row + 1][object->col] = c;
+        move_handler(map, move, replacement);
         object->row += 1;
         ll_insert_last(map->move_history, move);
         break;
     case LEFT:
         new_pos->row = object->row;
         new_pos->col = object->col - 1;
-        move->old_char = map->map[new_pos->row][new_pos->col];
-
-        move->to = new_pos;
-        map->map[object->row][object->col] = replacement;
-        map->map[object->row][object->col - 1] = c;
+        move_handler(map, move,replacement);
         object->col -= 1;
         ll_insert_last(map->move_history, move);
         break;
     case RIGHT:
         new_pos->row = object->row;
         new_pos->col = object->col + 1;
-        move->old_char = map->map[new_pos->row][new_pos->col];
-
-        move->to = new_pos;
-        map->map[object->row][object->col] = replacement;
-        map->map[object->row][object->col + 1] = c;
+        move_handler(map, move,replacement);
         object->col += 1;
         ll_insert_last(map->move_history, move);
         break;

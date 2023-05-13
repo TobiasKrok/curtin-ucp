@@ -53,13 +53,18 @@ void print_map(Map *map)
                 }
                 else
                 {
+                    if(map->trail_map[i -1][k -1] == 'T') {
+                        setBackground("blue");
+                    }
                     printf("%c ", map->map[i - 1][k - 1]);
+                    setBackground("reset");
                 }
             }
         }
         printf("\n");
     }
 }
+
 
 /**
  * Handles bounds checking and moves objects on the map
@@ -69,58 +74,35 @@ void print_map(Map *map)
  * @param direction The direction the player wants to move
  * @returns void
  */
-void move_object(Map *map, Direction direction)
+void handle_move(Map *map, Direction direction)
 {
-
     int box_adjacent = is_box_adjacent(map, direction);
+      if (is_move_oob(map, direction, box_adjacent) == FALSE)
+        {
+            if (box_adjacent == TRUE)
+            {
+                move(map, direction, 'B', &map->box_pos, FALSE, TRUE);
+            }
+            move(map, direction, 'P', &map->player_pos, box_adjacent, FALSE);
+        }
 
-    switch (direction)
+}
+
+void init_2d_arr(char ** arr, int rows, int cols) {
+    int i, k;
+     /* Initialize columns in map*/
+    for (i = 0; i < rows; i++)
     {
-    case UP:
-        if (is_move_oob(map, UP, box_adjacent) == FALSE)
+        /* Initialize each column. Each row is a pointer to another array*/
+        arr[i] = (char *)malloc(sizeof(char) * cols);
+    }
+    /* Set the value for all cells to ' ' */
+    for (k = 0; k < rows; k++)
+    {
+        for (i = 0; i < cols; i++)
         {
-            if (box_adjacent == TRUE)
-            {
-                move(map, UP, 'B', &map->box_pos, FALSE);
-            }
-            move(map, UP, 'P', &map->player_pos, box_adjacent);
+            arr[k][i] = ' ';
         }
-        break;
-    case DOWN:
-        if (is_move_oob(map, direction, box_adjacent) == FALSE)
-        {
-            if (box_adjacent == TRUE)
-            {
-                move(map, DOWN, 'B', &map->box_pos, FALSE);
-            }
-            move(map, DOWN, 'P', &map->player_pos, box_adjacent);
-        }
-
-        break;
-    case RIGHT:
-        if (is_move_oob(map, direction, box_adjacent) == FALSE)
-        {
-            if (box_adjacent == TRUE)
-            {
-                move(map, RIGHT, 'B', &map->box_pos, FALSE);
-            }
-
-            move(map, RIGHT, 'P', &map->player_pos, box_adjacent);
-        }
-
-        break;
-    case LEFT:
-        if (is_move_oob(map, direction, box_adjacent) == FALSE)
-        {
-            if (box_adjacent == TRUE)
-            {
-                move(map, LEFT, 'B', &map->box_pos, FALSE);
-            }
-            move(map, LEFT, 'P', &map->player_pos, box_adjacent);
-        }
-        break;
-    default:
-        break;
     }
 }
 
@@ -137,24 +119,14 @@ Map *create_game(GameInput game_input)
     We're using double pointer because it's an array of malloced arrays
     */
     char **arr = (char **)malloc(sizeof(char *) * game_input.rows);
-    int i, k;
+    char **trail_arr = (char **)malloc(sizeof(char *) * game_input.rows);
+    int i;
     LinkedList *move_history = ll_create();
     Map *map = (Map *)malloc(sizeof(Map));
 
-    /* Initialize columns in map*/
-    for (i = 0; i < game_input.rows; i++)
-    {
-        /* Initialize each column. Each row is a pointer to another array*/
-        arr[i] = (char *)malloc(sizeof(char) * game_input.cols);
-    }
-    /* Set the value for all cells to ' ' */
-    for (k = 0; k < game_input.rows; k++)
-    {
-        for (i = 0; i < game_input.cols; i++)
-        {
-            arr[k][i] = ' ';
-        }
-    }
+    init_2d_arr(arr, game_input.rows, game_input.cols);
+    init_2d_arr(trail_arr, game_input.rows, game_input.cols);
+
 
     /* Set the walls of the map*/
     for (i = 0; i < game_input.walls_count; i++)
@@ -178,7 +150,7 @@ Map *create_game(GameInput game_input)
     map->columns = game_input.cols;
     map->rows = game_input.rows;
     map->move_history = move_history;
-
+    map->trail_map = trail_arr;
     return map;
 }
 
@@ -208,16 +180,16 @@ void start_game(Map *map)
         switch (input)
         {
         case 'w':
-            move_object(map, UP);
+            handle_move(map, UP);
             break;
         case 's':
-            move_object(map, DOWN);
+            handle_move(map, DOWN);
             break;
         case 'd':
-            move_object(map, RIGHT);
+            handle_move(map, RIGHT);
             break;
         case 'a':
-            move_object(map, LEFT);
+            handle_move(map, LEFT);
             break;
         case 'u':
             undo_move(map);
