@@ -53,10 +53,11 @@ void print_map(Map *map)
                 }
                 else
                 {
-                    if(map->trail_map[i -1][k -1] == 'T') {
+                    char c = map->map[i - 1][k - 1];
+                    if(map->trail_map[i -1][k -1] >= 'T' || c == 'B' ) {
                         setBackground("blue");
                     }
-                    printf("%c ", map->map[i - 1][k - 1]);
+                    printf("%c ", c);
                     setBackground("reset");
                 }
             }
@@ -88,7 +89,7 @@ void handle_move(Map *map, Direction direction)
 
 }
 
-void init_2d_arr(char ** arr, int rows, int cols) {
+void init_2d_arr(char **arr, int rows, int cols) {
     int i, k;
      /* Initialize columns in map*/
     for (i = 0; i < rows; i++)

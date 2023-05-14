@@ -1,52 +1,309 @@
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char: G obj char: P 
-UNDO: old char: G obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-UNDO: old char:   obj char: P 
-old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: old char: UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: B 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: B 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: B 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: B 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: B 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: B 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char:   obj char: P 
-old char: < obj char: P 
-old char: old char: old char: old char: UNDO: old char: G obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char: G obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char: G obj char: P 
-UNDO: old char:   obj char: P 
-UNDO: old char:   obj char: P 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: U from: T 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: T from: U 
+to: T from: V 
+to: V from: V 
+to: V from: V 
+to: V from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from:   
+to:   from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+MOVE: to:   from: T 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: U from:   
+MOVE: to: T from: U 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: V from: T 
+to: V from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: U from: T 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to:   from: U 
+MOVE: to: V from:   
+MOVE: to: U from: V 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: T from: U 
+to: T from: V 
+to: V from: V 
+to: V from: V 
+to: V from: W 
+to: W from: T 
+to: T from: V 
+to: V from: V 
+to: V from: V 
+to: V from: V 
+to: V from: V 
+to: V from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from:   
+to:   from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+MOVE: to:   from: T 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: T from: T 
+MOVE: to: U from: T 
+MOVE: to:   from: U 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+MOVE: to: U from: T 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: U from: U 
+MOVE: to: V from: U 
+to: V from: V 
+to: V from: V 
+to: V from: V 
+to: V from: V 
+to: V from: V 
+to: V from: V 
+to: V from: V 
+to: V from: V 
+to: V from: U 
+to: U from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: U 
+to: U from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+MOVE: to:   from: T 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+to: T from: T 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from:   
+to:   from: T 
+to: T from: T 
+MOVE: to:   from: T 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+MOVE: to:   from: T 
+to:   from: U 
+to: U from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+to: T from: T 
+MOVE: to:   from: T 
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to:   from:   
+MOVE: to: T from:   
+to: T from: T 

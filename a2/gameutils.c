@@ -6,6 +6,24 @@
 #include "linkedlist.h"
 #include <stdarg.h>
 
+void appendFormattedStringToFile(const char *format, ...) {
+    FILE *file;
+    char buffer[256];
+    va_list args;
+    char *filename = "output.txt";
+    file = fopen(filename, "a");
+    if (file == NULL) {
+        printf("Error opening file: %s\n", filename);
+        return;
+    }
+
+    va_start(args, format);
+    vsprintf(buffer, format, args);
+    va_end(args);
+    fprintf(file, "%s \n", buffer);
+
+    fclose(file);
+}
 /**
  * Disables terminal input buffering and echoing in order to immediately
  * get user input. Input buffering means that it will store what you write into a buffer
@@ -189,7 +207,16 @@ void undo_move(Map *map)
         move->object->col = move->from->col;
 
         if(move->leave_trail) {
-            map->trail_map[move->to->row][move->from->col] = move->old_char;
+            char to = map->trail_map[move->to->row][move->to->col];
+            char from = map->trail_map[move->to->row][move->to->col];
+            appendFormattedStringToFile("to: %c from: %c", map->trail_map[move->to->row][move->to->col], map->trail_map[move->from->row][move->from->col]);
+
+            if( to > 'T' ) {
+                map->trail_map[move->to->row][move->to->col] -= 1;
+            } else {
+                
+                map->trail_map[move->to->row][move->to->col] = ' ';
+            }
         }
 
         /* Recursively undo moves of chained moves. The top node will be freed last as it unwinds the recursion stack */
@@ -214,7 +241,22 @@ void move_handler(Map *map, Move *move, char replacement) {
         map->map[move->to->row][move->to->col] = move->object_char;
 
         if(move->leave_trail) {
-            map->trail_map[move->from->row][move->to->col] = 'T';
+            char from = map->trail_map[move->from->row][move->from->col];
+            char to = map->trail_map[move->to->row][move->to->col];
+            appendFormattedStringToFile("MOVE: to: %c from: %c", map->trail_map[move->to->row][move->to->col], map->trail_map[move->from->row][move->from->col]);
+
+            if ( from >=  'T')
+            {
+                /* If the box overlaps its tail, we need to signal this. We just increment the char to the next ASCII char
+                   and when undoing, we will decremnt until the char is equal to T again
+                */
+               map->trail_map[move->from->row][move->from->col] += 1;
+
+            } else {
+                map->trail_map[move->from->row][move->from->col] = 'T';
+
+            }
+            
         }
 }
 
