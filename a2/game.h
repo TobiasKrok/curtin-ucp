@@ -20,7 +20,7 @@ typedef struct move
     char object_char; /* Which object we are moving */
     char old_char;    /* The character that was at the previous spot. Ensures that we dont overwrite the goal for instance*/
     int is_chained;   /* If the move is chained, it means that when undoing we need to undo the previous move as well*/
-    int leave_trail;
+    int leave_trail;  /* If the move should leave a trail behind it*/
 } Move;
 
 /* Contains the map and its size */
@@ -32,7 +32,7 @@ typedef struct map
     Point box_pos;
     Point goal_pos;
     char **map;
-    char **trail_map;
+    char **trail_map; /* Keeps track of where the trail is */
     LinkedList *move_history;
 
 } Map;

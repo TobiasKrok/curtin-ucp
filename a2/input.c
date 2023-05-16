@@ -4,6 +4,12 @@
 #include "input.h"
 #include "macros.h"
 
+/**
+ * Validates the arguments passed to the program
+ * @param argc Number of arguments
+ * @param argv Array of arguments
+ * @returns OperationResult
+ * */
 OperationResult validate_args(int argc, char **argv)
 {
     /* Initialize the validation result*/
@@ -24,16 +30,31 @@ OperationResult validate_args(int argc, char **argv)
     return result;
 }
 
+/**
+ * Gets the length of a file
+ * @param fptr File pointer
+ * @returns length of the file
+ * */
 int get_file_len(FILE *fptr)
 {
     int len = 0;
+    /* Get the current position of the file pointer*/
     int curPos = ftell(fptr);
+    /* Seek to the end of the file*/
     fseek(fptr, 0, SEEK_END);
+    /* Get the current position of the file pointer, which is the length of the file*/
     len = ftell(fptr);
+    /* Seek back to the original position using curPos as the offset*/
     fseek(fptr, curPos, SEEK_SET);
     return len;
 }
 
+/**
+ * Reads the map file and sets the properties of GameInput
+ * @param argv Array of arguments containing the file name
+ * @param input Pointer to GameInput
+ * @returns OperationResult
+ * */
 OperationResult read_map_file(char **argv, GameInput *input)
 {
     OperationResult op_result = {FALSE, ""};
@@ -98,13 +119,12 @@ OperationResult read_map_file(char **argv, GameInput *input)
                             break;
                         case 'O':
                             /* Realloc the array to fit the new wall*/
-
                             input->walls_pos = (Point *)realloc(input->walls_pos, sizeof(Point) * (input->walls_count + 1));
 
                             input->walls_pos[input->walls_count].row = row;
                             input->walls_pos[input->walls_count].col = col;
                             input->walls_count++;
-                            
+
                             break;
                         default:
                             break;
@@ -115,8 +135,6 @@ OperationResult read_map_file(char **argv, GameInput *input)
         }
         fclose(fptr);
     }
-
-
 
     return op_result;
 }

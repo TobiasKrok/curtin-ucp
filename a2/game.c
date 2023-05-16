@@ -53,6 +53,7 @@ void print_map(Map *map)
                 }
                 else
                 {
+                    /* If the element is the box or the current element is a trail in the trail map*/
                     char c = map->map[i - 1][k - 1];
                     if (map->trail_map[i - 1][k - 1] >= 'T' || c == 'B')
                     {
@@ -122,9 +123,11 @@ Map *create_game(GameInput game_input)
     char **arr = (char **)malloc(sizeof(char *) * game_input.rows);
     char **trail_arr = (char **)malloc(sizeof(char *) * game_input.rows);
     int i;
+    /* Initialize the move history linked list */
     LinkedList *move_history = ll_create();
     Map *map = (Map *)malloc(sizeof(Map));
 
+    /* Initialize map array and trail map array with empty spaces*/
     init_2d_char_arr(arr, game_input.rows, game_input.cols);
     init_2d_char_arr(trail_arr, game_input.rows, game_input.cols);
 
@@ -152,6 +155,7 @@ Map *create_game(GameInput game_input)
     map->move_history = move_history;
     /* Uodate initialize trail */
     map->trail_map = trail_arr;
+    /* Set initial trail at the box position*/
     map->trail_map[game_input.box_pos.row][game_input.box_pos.col] = 'T';
     return map;
 }
@@ -210,6 +214,12 @@ void start_game(Map *map)
     }
 }
 
+/**
+ * Helper function to free the move history linked list
+ * @rivate
+ * @param node Pointer to the node
+ * @returns void
+ */
 void free_move_history(Node *node)
 {
     if (node != NULL)
@@ -231,6 +241,7 @@ void free_move_history(Node *node)
 void free_map(Map *map)
 {
     int i;
+    /* Free all arrays in 2d arrays*/
     for (i = 0; i < map->rows; i++)
     {
         free(map->map[i]);

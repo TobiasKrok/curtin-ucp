@@ -2,7 +2,7 @@
 #define GAMEUTILS_H
 #include "game.h"
 
-char get_input();
+char get_input(void);
 int is_box_adjacent(Map *map, Direction direction);
 int is_move_oob(Map *map, Direction direction, int box_adjacent);
 void undo_move(Map *map);

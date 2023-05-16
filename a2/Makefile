@@ -22,7 +22,7 @@ color.o: color.c color.h
 terminal.o: terminal.c terminal.h
 	$(CC) $(CFLAGS) -c terminal.c
 
-linkedlist.o: linkedlist.c linkedlist.h input.h game.h
+linkedlist.o: linkedlist.c linkedlist.h
 	$(CC) $(CFLAGS) -c linkedlist.c
 
 gameutils.o: gameutils.c gameutils.h linkedlist.h
