@@ -164,7 +164,7 @@ int is_move_oob(Map *map, Direction direction, int box_adjacent)
 }
 
 /**
- * Undoes the last move made by the player
+ * Undos the last move made by the player
  * @public
  * @param map Pointer to the game map
  * @param object Pointer to the object that was moved
@@ -187,7 +187,7 @@ void undo_move(Map *map)
         move->object->row = move->from->row;
         move->object->col = move->from->col;
 
-        if (move->leave_trail)
+        if (move->leave_trail == TRUE)
         {
             if (map->trail_map[move->to->row][move->to->col] > 'T')
             {
@@ -208,11 +208,18 @@ void undo_move(Map *map)
         /* Free removed node and old move*/
         free(move->from);
         free(move->to);
-        free(move);
+        free(lastNode->data);
         free(lastNode);
     }
 }
 
+/**
+ * Handles the actual moving of the object on the map
+ * @private
+ * @param map The game map 
+ * @param move The move that is to be processed on the map
+ * @param replacement Which character should be placed at the old position of the object
+ */
 void move_handler(Map *map, Move *move, char replacement)
 {
 
@@ -221,14 +228,13 @@ void move_handler(Map *map, Move *move, char replacement)
     map->map[move->from->row][move->from->col] = replacement;
     /*Sets the char at the new position */
     map->map[move->to->row][move->to->col] = move->object_char;
-
     if (move->leave_trail)
     {
 
         if (map->trail_map[move->to->row][move->to->col] >= 'T')
         {
             /* If the box overlaps its tail, we need to signal this. We just increment the char to the next ASCII char
-               and when undoing, we will decremnt until the char is equal to T again
+               and when undoing, we will decrement until the char is equal to T again
             */
             map->trail_map[move->to->row][move->to->col] += 1;
         }
@@ -248,6 +254,7 @@ void move_handler(Map *map, Move *move, char replacement)
  * @param c The char that should be set at the new position
  * @param object A pointer to an object on the map, like the player or box. This will be updated with the new posotion
  * @param link_prevous_move Whether or not the move should be linked to the previous move in the move history
+ * @param leave_trail Whether or not the move should leave a trail on the map
  *
  * @returns void
  */
@@ -259,7 +266,6 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     */
     char replacement = object->col == map->goal_pos.col && object->row == map->goal_pos.row ? 'G' : ' ';
     /* Initialize movement structs that will be stored in the move history linked list*/
-
     Move *move = (Move *)malloc(sizeof(Move));
     Point *old_pos = (Point *)malloc(sizeof(Point));
     Point *new_pos = (Point *)malloc(sizeof(Point));
@@ -267,6 +273,7 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     old_pos->row = object->row;
     move->from = old_pos;
     move->to = new_pos;
+    /* Specify the object that is to be moved and its character*/
     move->object = object;
     move->object_char = c;
 
@@ -275,13 +282,16 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     so the player move will be last in the list and be chained to the box move)
     */
     move->is_chained = link_previous_move;
+    
     move->leave_trail = leave_trail;
     switch (direction)
 
     {
     case UP:
+        /* Set the new position */
         new_pos->row = object->row - 1;
         new_pos->col = object->col;
+        /* Perform the actual move */
         move_handler(map, move, replacement);
         /* Updates the object position*/
         object->row -= 1;

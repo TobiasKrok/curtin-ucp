@@ -5,6 +5,11 @@
 #include "game.h"
 #include "input.h"
 
+/**
+ * Creates and initializes a LinkedList
+ * @returns pointer to a LinkedList struct
+*/
+
 LinkedList *ll_create(void)
 {
 
@@ -17,25 +22,36 @@ LinkedList *ll_create(void)
     return linkedList;
 }
 
+/** 
+ * Inserts a new node at the head of the linked list
+ * @param list LinkedList to append to
+ * @param data Data of the new linkedlist node 
+ * */
 void ll_insert_start(LinkedList *list, void *data)
 {
-
+    /* Initialize the node*/
     Node *node = (Node *)malloc(sizeof(Node));
     node->data = data;
+
+    /* If the head is null then the list is empty*/
     if (list->head == NULL)
     {
+        /* Th first node will have no next and previous (as the linkedlist only contains 1 element) */
         node->previous = NULL;
         node->next = NULL;
         list->head = node;
         list->size = 1;
 
+        /* Also set the tail of the node to the first node as it is both the head and the tail*/
         list->tail = node;
         list->tail->next = NULL;
         list->tail->previous = NULL;
     }
     else
     {
+        /* Store the previous head*/
         Node *prevHead = list->head;
+        /* Set the old heads' previous to the */
         prevHead->previous = node;
         list->head = node;
         node->next = prevHead;

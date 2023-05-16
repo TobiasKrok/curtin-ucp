@@ -64,7 +64,7 @@ OperationResult read_map_file(char **argv, GameInput *input)
             int is_first_line = TRUE;
 
             /* Create an array of size 1, we will realloc it later*/
-            input->walls_pos = (Point *)malloc(sizeof(Point) * 1);
+            input->walls_pos = NULL;
             input->walls_count = 0;
             while (n != EOF)
             {
@@ -97,11 +97,14 @@ OperationResult read_map_file(char **argv, GameInput *input)
                             input->goal_pos.col = col;
                             break;
                         case 'O':
+                            /* Realloc the array to fit the new wall*/
+
+                            input->walls_pos = (Point *)realloc(input->walls_pos, sizeof(Point) * (input->walls_count + 1));
+
                             input->walls_pos[input->walls_count].row = row;
                             input->walls_pos[input->walls_count].col = col;
                             input->walls_count++;
-                            /* Realloc the array to fit the new wall*/
-                            input->walls_pos = (Point *)realloc(input->walls_pos, sizeof(Point) * (input->walls_count + 1));
+                            
                             break;
                         default:
                             break;
