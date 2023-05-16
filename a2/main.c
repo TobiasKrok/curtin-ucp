@@ -25,6 +25,8 @@ int main(int argc, char **argv)
         printf("Game Over! You win!!\n");
         free_map(map);
     }
+    free(game_input->walls_pos);
+    free(game_input);
 
     return (read_map_res.is_error == TRUE || validation_res.is_error == TRUE);
 }

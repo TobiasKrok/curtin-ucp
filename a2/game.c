@@ -54,7 +54,8 @@ void print_map(Map *map)
                 else
                 {
                     char c = map->map[i - 1][k - 1];
-                    if(map->trail_map[i -1][k -1] >= 'T' || c == 'B' ) {
+                    if (map->trail_map[i - 1][k - 1] >= 'T' || c == 'B')
+                    {
                         setBackground("blue");
                     }
                     printf("%c ", c);
@@ -65,7 +66,6 @@ void print_map(Map *map)
         printf("\n");
     }
 }
-
 
 /**
  * Handles bounds checking and moves objects on the map
@@ -78,20 +78,20 @@ void print_map(Map *map)
 void handle_move(Map *map, Direction direction)
 {
     int box_adjacent = is_box_adjacent(map, direction);
-      if (is_move_oob(map, direction, box_adjacent) == FALSE)
+    if (is_move_oob(map, direction, box_adjacent) == FALSE)
+    {
+        if (box_adjacent == TRUE)
         {
-            if (box_adjacent == TRUE)
-            {
-                move(map, direction, 'B', &map->box_pos, FALSE, TRUE);
-            }
-            move(map, direction, 'P', &map->player_pos, box_adjacent, FALSE);
+            move(map, direction, 'B', &map->box_pos, FALSE, TRUE);
         }
-
+        move(map, direction, 'P', &map->player_pos, box_adjacent, FALSE);
+    }
 }
 
-void init_2d_arr(char **arr, int rows, int cols) {
+void init_2d_char_arr(char **arr, int rows, int cols)
+{
     int i, k;
-     /* Initialize columns in map*/
+    /* Initialize columns in map*/
     for (i = 0; i < rows; i++)
     {
         /* Initialize each column. Each row is a pointer to another array*/
@@ -125,9 +125,8 @@ Map *create_game(GameInput game_input)
     LinkedList *move_history = ll_create();
     Map *map = (Map *)malloc(sizeof(Map));
 
-    init_2d_arr(arr, game_input.rows, game_input.cols);
-    init_2d_arr(trail_arr, game_input.rows, game_input.cols);
-
+    init_2d_char_arr(arr, game_input.rows, game_input.cols);
+    init_2d_char_arr(trail_arr, game_input.rows, game_input.cols);
 
     /* Set the walls of the map*/
     for (i = 0; i < game_input.walls_count; i++)
@@ -151,7 +150,9 @@ Map *create_game(GameInput game_input)
     map->columns = game_input.cols;
     map->rows = game_input.rows;
     map->move_history = move_history;
+    /* Uodate initialize trail */
     map->trail_map = trail_arr;
+    map->trail_map[game_input.box_pos.row][game_input.box_pos.col] = 'T';
     return map;
 }
 
@@ -208,6 +209,19 @@ void start_game(Map *map)
         }
     }
 }
+
+void free_move_history(Node *node)
+{
+    if (node != NULL)
+    {
+        Move *move = (Move *)node->data;
+        free(move->from);
+        free(move->to);
+    }
+    free(node->data);
+    free(node);
+}
+
 /**
  * Helper function to free the game map
  * @public
@@ -220,7 +234,11 @@ void free_map(Map *map)
     for (i = 0; i < map->rows; i++)
     {
         free(map->map[i]);
+        free(map->trail_map[i]);
     }
+    free(map->trail_map);
     free(map->map);
+    ll_iterate(map->move_history, free_move_history);
+    free(map->move_history);
     free(map);
 }

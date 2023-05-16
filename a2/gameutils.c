@@ -4,26 +4,7 @@
 #include "terminal.h"
 #include "macros.h"
 #include "linkedlist.h"
-#include <stdarg.h>
 
-void appendFormattedStringToFile(const char *format, ...) {
-    FILE *file;
-    char buffer[256];
-    va_list args;
-    char *filename = "output.txt";
-    file = fopen(filename, "a");
-    if (file == NULL) {
-        printf("Error opening file: %s\n", filename);
-        return;
-    }
-
-    va_start(args, format);
-    vsprintf(buffer, format, args);
-    va_end(args);
-    fprintf(file, "%s \n", buffer);
-
-    fclose(file);
-}
 /**
  * Disables terminal input buffering and echoing in order to immediately
  * get user input. Input buffering means that it will store what you write into a buffer
@@ -206,15 +187,15 @@ void undo_move(Map *map)
         move->object->row = move->from->row;
         move->object->col = move->from->col;
 
-        if(move->leave_trail) {
-            char to = map->trail_map[move->to->row][move->to->col];
-            char from = map->trail_map[move->to->row][move->to->col];
-            appendFormattedStringToFile("to: %c from: %c", map->trail_map[move->to->row][move->to->col], map->trail_map[move->from->row][move->from->col]);
-
-            if( to > 'T' ) {
+        if (move->leave_trail)
+        {
+            if (map->trail_map[move->to->row][move->to->col] > 'T')
+            {
                 map->trail_map[move->to->row][move->to->col] -= 1;
-            } else {
-                
+            }
+            else
+            {
+
                 map->trail_map[move->to->row][move->to->col] = ' ';
             }
         }
@@ -232,32 +213,30 @@ void undo_move(Map *map)
     }
 }
 
-void move_handler(Map *map, Move *move, char replacement) {
+void move_handler(Map *map, Move *move, char replacement)
+{
 
-        move->old_char = map->map[move->to->row][move->to->col];
-        /* Sets the current position to the replacement char, either G or ' '*/
-        map->map[move->from->row][move->from->col] = replacement;
-        /*Sets the char at the new position */
-        map->map[move->to->row][move->to->col] = move->object_char;
+    move->old_char = map->map[move->to->row][move->to->col];
+    /* Sets the current position to the replacement char, either G or ' '*/
+    map->map[move->from->row][move->from->col] = replacement;
+    /*Sets the char at the new position */
+    map->map[move->to->row][move->to->col] = move->object_char;
 
-        if(move->leave_trail) {
-            char from = map->trail_map[move->from->row][move->from->col];
-            char to = map->trail_map[move->to->row][move->to->col];
-            appendFormattedStringToFile("MOVE: to: %c from: %c", map->trail_map[move->to->row][move->to->col], map->trail_map[move->from->row][move->from->col]);
+    if (move->leave_trail)
+    {
 
-            if ( from >=  'T')
-            {
-                /* If the box overlaps its tail, we need to signal this. We just increment the char to the next ASCII char
-                   and when undoing, we will decremnt until the char is equal to T again
-                */
-               map->trail_map[move->from->row][move->from->col] += 1;
-
-            } else {
-                map->trail_map[move->from->row][move->from->col] = 'T';
-
-            }
-            
+        if (map->trail_map[move->to->row][move->to->col] >= 'T')
+        {
+            /* If the box overlaps its tail, we need to signal this. We just increment the char to the next ASCII char
+               and when undoing, we will decremnt until the char is equal to T again
+            */
+            map->trail_map[move->to->row][move->to->col] += 1;
         }
+        else
+        {
+            map->trail_map[move->to->row][move->to->col] = 'T';
+        }
+    }
 }
 
 /**
@@ -303,7 +282,7 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     case UP:
         new_pos->row = object->row - 1;
         new_pos->col = object->col;
-        move_handler(map, move,replacement);
+        move_handler(map, move, replacement);
         /* Updates the object position*/
         object->row -= 1;
         /* Insert the move into the box history*/
@@ -319,14 +298,14 @@ void move(Map *map, Direction direction, char c, Point *object, int link_previou
     case LEFT:
         new_pos->row = object->row;
         new_pos->col = object->col - 1;
-        move_handler(map, move,replacement);
+        move_handler(map, move, replacement);
         object->col -= 1;
         ll_insert_last(map->move_history, move);
         break;
     case RIGHT:
         new_pos->row = object->row;
         new_pos->col = object->col + 1;
-        move_handler(map, move,replacement);
+        move_handler(map, move, replacement);
         object->col += 1;
         ll_insert_last(map->move_history, move);
         break;

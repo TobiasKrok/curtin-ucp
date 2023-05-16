@@ -104,6 +104,16 @@ void ll_insert_last(LinkedList *list, void *data)
 
 int ll_is_empty(LinkedList *list)
 {
-    return list == NULL  || list->size == 0|| list->head == NULL;
+    return list == NULL || list->size == 0 || list->head == NULL;
 }
-
+void ll_iterate(LinkedList *list, void (*f)(Node *node))
+{
+    Node *currentNode = list->head;
+    Node *nextNode;
+    while (currentNode != NULL)
+    {
+        nextNode = currentNode->next;
+        f(currentNode);
+        currentNode = nextNode;
+    }
+}

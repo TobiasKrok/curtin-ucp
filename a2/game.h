@@ -32,7 +32,7 @@ typedef struct map
     Point box_pos;
     Point goal_pos;
     char **map;
-    char **trail_map; 
+    char **trail_map;
     LinkedList *move_history;
 
 } Map;

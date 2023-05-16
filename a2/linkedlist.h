@@ -21,5 +21,5 @@ void ll_insert_last(LinkedList *list, void *data);
 Node *ll_remove_start(LinkedList *list);
 Node *ll_remove_last(LinkedList *list);
 int ll_is_empty(LinkedList *list);
-void writeLinkedListToFile(const LinkedList *list, const char *filename);
+void ll_iterate(LinkedList *list, void (*f)(Node *data));
 #endif
