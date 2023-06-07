@@ -28,7 +28,7 @@ int main(int argc, char **argv)
         /* Everything is good, let's start the simulation */
         else
         {
-            print_simulation(simulation);
+            start_simulation(simulation);
         }
     }
 

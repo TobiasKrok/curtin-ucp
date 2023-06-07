@@ -21,3 +21,6 @@ input.o: input.c input.h macros.h
 
 simulation.o: simulation.c simulation.h color.h
 	$(CC) $(CFLAGS) -c simulation.c
+
+clean:
+	rm -f $(EXECUTABLE) *.o 

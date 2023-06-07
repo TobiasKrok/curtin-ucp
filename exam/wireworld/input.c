@@ -124,7 +124,7 @@ OperationResult parse_args(char **argv, Simulation *simulation)
     if (op_result.is_error == FALSE)
     {
         simulation->MAX_ITERATION = atoi(argv[2]);
-        simulation->sleep_ms = atof(argv[3]);
+        simulation->sleep_seconds = atof(argv[3]);
     }
     return op_result;
 }

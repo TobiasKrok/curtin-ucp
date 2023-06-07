@@ -1,5 +1,11 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
+typedef struct cell
+{
+    int col;
+    int row;
+    int value;
+} Cell;
 
 typedef struct simulation
 {
@@ -7,7 +13,9 @@ typedef struct simulation
     int rows;
     int cols;
     int MAX_ITERATION;
-    float sleep_ms;
+    float sleep_seconds; /* Sleep in seconds */
 } Simulation;
-void print_simulation(Simulation *simulation);
+
+void start_simulation(Simulation *simulation);
+void update_simulation(Simulation *simulation);
 #endif
