@@ -2,6 +2,7 @@
 #define INPUT_H
 
 #include "macros.h"
+#include "simulation.h"
 
 /* Struct for the validation result for input validation
     is_error will be TRUE/FALSE
@@ -20,13 +21,6 @@ typedef struct point
     int row;
 } Point;
 
-typedef struct input
-{
-    int **map;
-    int rows;
-    int cols;
-} GameInput;
-
-OperationResult read_map_file(char **argv, GameInput *input);
 OperationResult validate_args(int argc, char **argv);
+OperationResult parse_args(char **argv, Simulation *input);
 #endif

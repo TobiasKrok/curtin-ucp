@@ -3,7 +3,7 @@
 #include <string.h>
 #include "input.h"
 #include "macros.h"
-
+#include "simulation.h"
 
 /**
  * Validates the arguments passed to the program
@@ -22,7 +22,7 @@ OperationResult validate_args(int argc, char **argv)
         result.is_error = TRUE;
         strcpy(result.error_message, "usage: <map file.txt <cycle limit> <sleep duration>");
     }
-    else if (argc > 2)
+    else if (argc > 4)
     {
         result.is_error = TRUE;
         strcpy(result.error_message, "usage: <map file.txt <cycle limit> <sleep duration>");
@@ -30,6 +30,12 @@ OperationResult validate_args(int argc, char **argv)
 
     return result;
 }
+
+/**
+ * Parses and populates the GameInput struct with input arguments
+ * @param argv Array of command line arguments
+ * @returns OperationResult
+ */
 
 /**
  * Gets the length of a file
@@ -51,19 +57,19 @@ int get_file_len(FILE *fptr)
 }
 
 /**
- * Reads the map file and sets the properties of GameInput
- * @param argv Array of arguments containing the file name
- * @param input Pointer to GameInput
+ * Reads the map file and sets the properties of Input
+ * @param filename Name of the file to read
+ * @param simulation Pointer to Input
  * @returns OperationResult
  * */
-OperationResult read_map_file(char **argv, GameInput *input)
+OperationResult read_map_file(char *filename, Simulation *simulation)
 {
     OperationResult op_result = {FALSE, ""};
 
     FILE *fptr;
 
     /* Open file*/
-    fptr = fopen(argv[1], "r");
+    fptr = fopen(filename, "r");
     /* Check if the file is null, which indicates that the file could not be found*/
     if (fptr == NULL)
     {
@@ -82,29 +88,43 @@ OperationResult read_map_file(char **argv, GameInput *input)
 
         else /* Everything should be good so let's read the file*/
         {
-            int n;
-            int is_first_line = TRUE;
+            int i, j;
+            int **map;
+            /* Read the first line, which is the size of the map*/
+            fscanf(fptr, "%d %d", &simulation->rows, &simulation->cols);
 
-            /* Create an array of size 1, we will realloc it later*/
-       
-            while (n != EOF)
+            /* Create the 2d array for the map */
+            map = (int **)malloc(simulation->rows * sizeof(int *));
+            simulation->map = map;
+            for (i = 0; i < simulation->rows; i++)
             {
-                if (is_first_line)
-                {
-                    /* Read the first line, which is the size of the map*/
-                    fscanf(fptr, "%d %d", &input->rows, &input->cols);
-                    is_first_line = FALSE;
-                }
-                else
-                {
-                    /* Read the rest of the file and set the properties of GameInput*/
-                 
+                map[i] = (int *)malloc(simulation->cols * sizeof(int));
+            }
 
+            /* Read the rest of the file and populate the map array*/
+
+            for (i = 0; i < simulation->rows; i++)
+            {
+                for (j = 0; j < simulation->cols; ++j)
+                {
+                    fscanf(fptr, "%d", &map[i][j]);
                 }
             }
         }
         fclose(fptr);
     }
 
+    return op_result;
+}
+
+OperationResult parse_args(char **argv, Simulation *simulation)
+{
+    OperationResult op_result = read_map_file(argv[1], simulation);
+
+    if (op_result.is_error == FALSE)
+    {
+        simulation->MAX_ITERATION = atoi(argv[2]);
+        simulation->sleep_ms = atof(argv[3]);
+    }
     return op_result;
 }
