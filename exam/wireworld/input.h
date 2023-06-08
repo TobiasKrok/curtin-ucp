@@ -14,13 +14,6 @@ typedef struct result
     char error_message[1000];
 } OperationResult;
 
-/* Contains the position of an object on the map */
-typedef struct point
-{
-    int col;
-    int row;
-} Point;
-
 OperationResult validate_args(int argc, char **argv);
 OperationResult parse_args(char **argv, Simulation *input);
 #endif

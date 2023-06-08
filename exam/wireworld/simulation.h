@@ -1,11 +1,5 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
-typedef struct cell
-{
-    int col;
-    int row;
-    int value;
-} Cell;
 
 typedef struct simulation
 {
@@ -17,5 +11,4 @@ typedef struct simulation
 } Simulation;
 
 void start_simulation(Simulation *simulation);
-void update_simulation(Simulation *simulation);
 #endif

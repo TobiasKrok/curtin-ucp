@@ -3,6 +3,7 @@
 #include "input.h"
 #include "macros.h"
 #include "simulation.h"
+#include "arrays.h"
 
 int main(int argc, char **argv)
 {
@@ -29,8 +30,10 @@ int main(int argc, char **argv)
         else
         {
             start_simulation(simulation);
+            free_2d_int_array(simulation->map, simulation->rows);
         }
     }
+    free(simulation);
 
     return (parse_args_result.is_error == TRUE || validation_result.is_error == TRUE);
 }

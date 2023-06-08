@@ -4,6 +4,7 @@
 #include "input.h"
 #include "macros.h"
 #include "simulation.h"
+#include "arrays.h"
 
 /**
  * Validates the arguments passed to the program
@@ -89,17 +90,11 @@ OperationResult read_map_file(char *filename, Simulation *simulation)
         else /* Everything should be good so let's read the file*/
         {
             int i, j;
-            int **map;
             /* Read the first line, which is the size of the map*/
             fscanf(fptr, "%d %d", &simulation->rows, &simulation->cols);
 
             /* Create the 2d array for the map */
-            map = (int **)malloc(simulation->rows * sizeof(int *));
-            simulation->map = map;
-            for (i = 0; i < simulation->rows; i++)
-            {
-                map[i] = (int *)malloc(simulation->cols * sizeof(int));
-            }
+            simulation->map = create_2d_array(simulation->rows, simulation->cols, FALSE);
 
             /* Read the rest of the file and populate the map array*/
 
@@ -107,7 +102,7 @@ OperationResult read_map_file(char *filename, Simulation *simulation)
             {
                 for (j = 0; j < simulation->cols; ++j)
                 {
-                    fscanf(fptr, "%d", &map[i][j]);
+                    fscanf(fptr, "%d", &simulation->map[i][j]);
                 }
             }
         }
@@ -117,6 +112,12 @@ OperationResult read_map_file(char *filename, Simulation *simulation)
     return op_result;
 }
 
+/**
+ * Reads the input arguments, loads the map file and parses the input arguments
+ * @param argv Command line arguments
+ * @param simulation The simulation struct
+ * @returns OperationResult
+ */
 OperationResult parse_args(char **argv, Simulation *simulation)
 {
     OperationResult op_result = read_map_file(argv[1], simulation);
