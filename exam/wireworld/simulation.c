@@ -44,26 +44,6 @@ void print_simulation(Simulation *simulation)
 }
 
 /**
- * Starts the simulation and runs it for the specifed amount of iterations
- * @param simulation The simulation struct
- */
-void start_simulation(Simulation *simulation)
-{
-
-    int i;
-
-    for (i = 0; i < simulation->MAX_ITERATION; i++)
-    {
-        /* Print the map */
-        print_simulation(simulation);
-        /* Update the simulation for this tick */
-        update_simulation(simulation);
-        /* Sleep for the specified amount of seconds */
-        newSleep(simulation->sleep_seconds);
-    }
-}
-
-/**
  * Creates a Moore neighborhood matrix for a specified cell in the simulation map
  * which lists the values of the adjacent cells
  * @param cell_row Which row the cell is on
@@ -222,4 +202,26 @@ void update_simulation(Simulation *simulation)
     /* Replace the simulation map with the updated temporary map*/
     copy_2d_int_array(temp_map, simulation->map, simulation->rows, simulation->cols);
     free_2d_int_array(temp_map, simulation->rows);
+}
+
+/**
+ * Starts the simulation and runs it for the specifed amount of iterations
+ * @param simulation The simulation struct
+ */
+void start_simulation(Simulation *simulation)
+{
+
+    int i;
+
+    for (i = 0; i < simulation->MAX_ITERATION; i++)
+    {
+
+        /* Print the map */
+        print_simulation(simulation);
+        /* Update the simulation for this tick */
+        update_simulation(simulation);
+        /* Sleep for the specified amount of seconds */
+        newSleep(simulation->sleep_seconds);
+        system("clear");
+    }
 }
