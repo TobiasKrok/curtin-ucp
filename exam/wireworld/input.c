@@ -21,12 +21,18 @@ OperationResult validate_args(int argc, char **argv)
     if (argc < 4)
     {
         result.is_error = TRUE;
-        strcpy(result.error_message, "usage: <map file.txt <cycle limit> <sleep duration>");
+        strcpy(result.error_message, "usage: <map_file.txt> <steps_amount> <sleep_duration>");
     }
     else if (argc > 4)
     {
         result.is_error = TRUE;
-        strcpy(result.error_message, "usage: <map file.txt <cycle limit> <sleep duration>");
+        strcpy(result.error_message, "usage: <map_file.txt> <steps_amount> <sleep_duration>");
+    } else if(atoi(argv[2]) < 0) {
+        result.is_error = TRUE;
+        strcpy(result.error_message, "error: steps_amount cannot be a negative number ");
+    } else if(atof(argv[3]) < 0) {
+        result.is_error = TRUE;
+        strcpy(result.error_message, "error: sleep_duration cannot be a negative number ");
     }
 
     return result;
@@ -120,6 +126,7 @@ OperationResult read_map_file(char *filename, Simulation *simulation)
  */
 OperationResult parse_args(char **argv, Simulation *simulation)
 {
+
     OperationResult op_result = read_map_file(argv[1], simulation);
 
     if (op_result.is_error == FALSE)

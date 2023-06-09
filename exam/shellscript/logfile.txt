@@ -1,0 +1,203 @@
+2022-01-01 08:12:56 [INFO] Application started
+2022-01-01 08:14:32 [DEBUG] Processing request: GET /api/users
+2022-01-01 08:15:28 [ERROR] An error occurred while processing the request: Invalid user credentials
+2022-01-01 08:16:13 [INFO] User 'john.doe' logged in
+2022-01-01 08:17:49 [WARNING] Invalid input received: Missing required field 'email'
+2022-02-03 09:22:17 [INFO] Application started
+2022-02-03 09:23:51 [DEBUG] Processing request: POST /api/products
+2022-02-03 09:24:07 [INFO] Product '12345' created successfully
+2022-02-03 09:24:36 [DEBUG] Processing request: PUT /api/products/12345
+2022-02-03 09:24:38 [INFO] Product '12345' updated successfully
+2022-02-03 09:25:12 [ERROR] An error occurred while processing the request: Database connection failed
+2022-03-05 11:34:25 [INFO] Application started
+2022-03-05 11:35:49 [DEBUG] Processing request: GET /api/users
+2022-03-05 11:36:03 [ERROR] An error occurred while processing the request: Internal server error
+2022-03-05 11:36:55 [INFO] User 'jane.smith' logged in
+2022-03-05 11:37:28 [WARNING] Invalid input received: Invalid email format
+2022-03-05 11:37:54 [INFO] User 'jane.smith' logged out
+2022-03-07 13:47:09 [INFO] Application started
+2022-03-07 13:48:32 [DEBUG] Processing request: GET /api/products
+2022-03-07 13:48:45 [INFO] Product '56789' retrieved successfully
+2022-03-07 13:49:15 [DEBUG] Processing request: DELETE /api/products/56789
+2022-03-07 13:49:17 [INFO] Product '56789' deleted successfully
+2022-03-07 13:49:54 [ERROR] An error occurred while processing the request: File not found
+2022-04-10 15:58:21 [INFO] Application started
+2022-04-10 15:59:37 [DEBUG] Processing request: POST /api/orders
+2022-04-10 15:59:45 [INFO] Order '9876' created successfully
+2022-04-10 16:00:21 [DEBUG] Processing request: PUT /api/orders/9876
+2022-04-10 16:00:23 [INFO] Order '9876' updated successfully
+2022-04-10 16:00:56 [ERROR] An error occurred while processing the request: Payment failed
+2022-05-12 18:09:03 [INFO] Application started
+2022-05-12 18:10:28 [DEBUG] Processing request: GET /api/users
+2022-05-12 18:10:39 [ERROR] An error occurred while processing the request: User not found
+2022-05-12 18:11:21 [INFO] User 'alice.walker' logged in
+2022-05-12 18:11:59 [WARNING] Invalid input received: Missing required field 'password'
+2022-05-12 18:12:24 [INFO] User 'alice.walker' logged out
+2022-05-14 20:21:15 [INFO] Application started
+2022-05-14 20:22:38 [DEBUG] Processing request: GET /api/products
+2022-05-14 20:22:49 [INFO] Product '24680' retrieved successfully
+2022-05-14 20:23:18 [DEBUG] Processing request: DELETE /api/products/24680
+2022-05-14 20:23:20 [INFO] Product '24680' deleted successfully
+2022-05-14 20:23:57 [ERROR] An error occurred while processing the request: Access denied
+2022-06-18 22:35:02 [INFO] Application started
+2022-06-18 22:36:29 [DEBUG] Processing request: POST /api/orders
+2022-06-18 22:36:36 [INFO] Order '54321' created successfully
+2022-06-18 22:37:09 [DEBUG] Processing request: PUT /api/orders/54321
+2022-06-18 22:37:11 [INFO] Order '54321' updated successfully
+2022-06-18 22:37:46 [ERROR] An error occurred while processing the request: Out of stock
+2022-07-22 00:44:14 [INFO] Application started
+2022-07-22 00:45:33 [DEBUG] Processing request: GET /api/users
+2022-07-22 00:45:44 [ERROR] An error occurred while processing the request: Server timeout
+2022-07-22 00:46:17 [INFO] User 'mark.johnson' logged in
+2022-07-22 00:46:53 [WARNING] Invalid input received: Invalid phone number format
+2022-07-22 00:47:22 [INFO] User 'mark.johnson' logged out
+2022-08-25 03:05:59 [INFO] Application started
+2022-08-25 03:07:27 [DEBUG] Processing request: GET /api/products
+2022-08-25 03:07:39 [INFO] Product '13579' retrieved successfully
+2022-08-25 03:08:12 [DEBUG] Processing request: DELETE /api/products/13579
+2022-08-25 03:08:14 [INFO] Product '13579' deleted successfully
+2022-08-25 03:08:51 [ERROR] An error occurred while processing the request: Database connection failed
+2022-09-29 05:14:43 [INFO] Application started
+2022-09-29 05:16:12 [DEBUG] Processing request: POST /api/users
+2022-09-29 05:16:19 [INFO] User 'amy.jackson' created successfully
+2022-09-29 05:16:57 [DEBUG] Processing request: PUT /api/users/amy.jackson
+2022-09-29 05:16:59 [INFO] User 'amy.jackson' updated successfully
+2022-09-29 05:17:34 [ERROR] An error occurred while processing the request: Email already exists
+2022-11-02 07:25:25 [INFO] Application started
+2022-11-02 07:26:55 [DEBUG] Processing request: GET /api/products
+2022-11-02 07:27:08 [INFO] Product '86420' retrieved successfully
+2022-11-02 07:27:38 [DEBUG] Processing request: DELETE /api/products/86420
+2022-11-02 07:27:40 [INFO] Product '86420' deleted successfully
+2022-11-02 07:28:17 [ERROR] An error occurred while processing the request: File not found
+2022-12-07 09:36:07 [INFO] Application started
+2022-12-07 09:37:38 [DEBUG] Processing request: POST /api/orders
+2022-12-07 09:37:45 [INFO] Order '23456' created successfully
+2022-12-07 09:38:18 [DEBUG] Processing request: PUT /api/orders/23456
+2022-12-07 09:38:20 [INFO] Order '23456' updated successfully
+2022-12-07 09:38:55 [ERROR] An error occurred while processing the request: Payment failed
+2023-01-10 11:46:35 [INFO] Application started
+2023-01-10 11:47:57 [DEBUG] Processing request: GET /api/users
+2023-01-10 11:48:08 [ERROR] An error occurred while processing the request: User not found
+2023-01-10 11:48:42 [INFO] User 'robert.jones' logged in
+2023-01-10 11:49:19 [WARNING] Invalid input received: Missing required field 'password'
+2023-01-10 11:49:44 [INFO] User 'robert.jones' logged out
+2023-02-14 13:57:29 [INFO] Application started
+2023-02-14 13:58:55 [DEBUG] Processing request: GET /api/products
+2023-02-14 13:59:06 [INFO] Product '31415' retrieved successfully
+2023-02-14 13:59:35 [DEBUG] Processing request: DELETE /api/products/31415
+2023-02-14 13:59:37 [INFO] Product '31415' deleted successfully
+2023-02-14 13:59:55 [ERROR] An error occurred while processing the request: Access denied
+2023-03-21 16:09:44 [INFO] Application started
+2023-03-21 16:11:09 [DEBUG] Processing request: POST /api/orders
+2023-03-21 16:11:17 [INFO] Order '54321' created successfully
+2023-03-21 16:11:52 [DEBUG] Processing request: PUT /api/orders/54321
+2023-03-21 16:11:54 [INFO] Order '54321' updated successfully
+2023-03-21 16:12:29 [ERROR] An error occurred while processing the request: Out of stock
+2023-04-26 18:20:17 [INFO] Application started
+2023-04-26 18:21:40 [DEBUG] Processing request: GET /api/users
+2023-04-26 18:21:52 [ERROR] An error occurred while processing the request: Server timeout
+2023-04-26 18:22:25 [INFO] User 'michael.smith' logged in
+2023-04-26 18:23:01 [WARNING] Invalid input received: Invalid phone number format
+2023-04-26 18:23:30 [INFO] User 'michael.smith' logged out
+2023-05-30 20:38:59 [INFO] Application started
+2023-05-30 20:40:25 [DEBUG] Processing request: GET /api/products
+2023-05-30 20:40:35 [INFO] Product '24680' retrieved successfully
+2023-05-30 20:41:04 [DEBUG] Processing request: DELETE /api/products/24680
+2023-05-30 20:41:06 [INFO] Product '24680' deleted successfully
+2023-05-30 20:41:43 [ERROR] An error occurred while processing the request: Access denied
+2023-07-05 22:50:31 [INFO] Application started
+2023-07-05 22:52:03 [DEBUG] Processing request: POST /api/orders
+2023-07-05 22:52:11 [INFO] Order '98765' created successfully
+2023-07-05 22:52:46 [DEBUG] Processing request: PUT /api/orders/98765
+2023-07-05 22:52:48 [INFO] Order '98765' updated successfully
+2023-07-05 22:53:23 [ERROR] An error occurred while processing the request: Payment failed
+2023-08-09 01:00:13 [INFO] Application started
+2023-08-09 01:01:39 [DEBUG] Processing request: GET /api/users
+2023-08-09 01:01:50 [ERROR] An error occurred while processing the request: User not found
+2023-08-09 01:02:24 [INFO] User 'jennifer.davis' logged in
+2023-08-09 01:03:01 [WARNING] Invalid input received: Missing required field 'password'
+2023-08-09 01:03:26 [INFO] User 'jennifer.davis' logged out
+2023-09-13 03:11:16 [INFO] Application started
+2023-09-13 03:12:43 [DEBUG] Processing request: GET /api/products
+2023-09-13 03:12:54 [INFO] Product '12345' retrieved successfully
+2023-09-13 03:13:23 [DEBUG] Processing request: DELETE /api/products/12345
+2023-09-13 03:13:25 [INFO] Product '12345' deleted successfully
+2023-09-13 03:13:42 [ERROR] An error occurred while processing the request: Database connection failed
+2023-10-18 05:21:32 [INFO] Application started
+2023-10-18 05:22:59 [DEBUG] Processing request: POST /api/users
+2023-10-18 05:23:06 [INFO] User 'emma.watson' created successfully
+2023-10-18 05:23:44 [DEBUG] Processing request: PUT /api/users/emma.watson
+2023-10-18 05:23:46 [INFO] User 'emma.watson' updated successfully
+2023-10-18 05:24:21 [ERROR] An error occurred while processing the request: Email already exists
+2023-11-22 07:32:11 [INFO] Application started
+2023-11-22 07:33:39 [DEBUG] Processing request: GET /api/products
+2023-11-22 07:33:50 [INFO] Product '56789' retrieved successfully
+2023-11-22 07:34:19 [DEBUG] Processing request: DELETE /api/products/56789
+2023-11-22 07:34:21 [INFO] Product '56789' deleted successfully
+2023-11-22 07:34:38 [ERROR] An error occurred while processing the request: File not found
+2023-12-28 09:42:28 [INFO] Application started
+2023-12-28 09:43:55 [DEBUG] Processing request: POST /api/orders
+2023-12-28 09:44:02 [INFO] Order '34567' created successfully
+2023-12-28 09:44:37 [DEBUG] Processing request: PUT /api/orders/34567
+2023-12-28 09:44:39 [INFO] Order '34567' updated successfully
+2023-12-28 09:45:14 [ERROR] An error occurred while processing the request: Payment failed
+2024-01-31 11:53:04 [INFO] Application started
+2024-01-31 11:54:31 [DEBUG] Processing request: GET /api/users
+2024-01-31 11:54:42 [ERROR] An error occurred while processing the request: User not found
+2024-01-31 11:55:16 [INFO] User 'jason.miller' logged in
+2024-01-31 11:55:53 [WARNING] Invalid input received: Missing required field 'password'
+2024-01-31 11:56:18 [INFO] User 'jason.miller' logged out
+2024-03-06 14:04:08 [INFO] Application started
+2024-03-06 14:05:34 [DEBUG] Processing request: GET /api/products
+2024-03-06 14:05:45 [INFO] Product '78901' retrieved successfully
+2024-03-06 14:06:14 [DEBUG] Processing request: DELETE /api/products/78901
+2024-03-06 14:06:16 [INFO] Product '78901' deleted successfully
+2024-03-06 14:06:33 [ERROR] An error occurred while processing the request: Access denied
+2024-04-10 16:14:23 [INFO] Application started
+2024-04-10 16:15:50 [DEBUG] Processing request: POST /api/orders
+2024-04-10 16:15:57 [INFO] Order '45678' created successfully
+2024-04-10 16:16:32 [DEBUG] Processing request: PUT /api/orders/45678
+2024-04-10 16:16:34 [INFO] Order '45678' updated successfully
+2024-04-10 16:17:09 [ERROR] An error occurred while processing the request: Payment failed
+2024-05-15 18:24:59 [INFO] Application started
+2024-05-15 18:26:25 [DEBUG] Processing request: GET /api/users
+2024-05-15 18:26:36 [ERROR] An error occurred while processing the request: Server timeout
+2024-05-15 18:27:10 [INFO] User 'sarah.williams' logged in
+2024-05-15 18:27:47 [WARNING] Invalid input received: Invalid phone number format
+2024-05-15 18:28:16 [INFO] User 'sarah.williams' logged out
+2024-06-19 20:36:06 [INFO] Application started
+2024-06-19 20:37:32 [DEBUG] Processing request: GET /api/products
+2024-06-19 20:37:43 [INFO] Product '01234' retrieved successfully
+2024-06-19 20:38:12 [DEBUG] Processing request: DELETE /api/products/01234
+2024-06-19 20:38:14 [INFO] Product '01234' deleted successfully
+2024-06-19 20:38:31 [ERROR] An error occurred while processing the request: Access denied
+2024-07-24 22:46:21 [INFO] Application started
+2024-07-24 22:47:48 [DEBUG] Processing request: POST /api/orders
+2024-07-24 22:47:55 [INFO] Order '56789' created successfully
+2024-07-24 22:48:30 [DEBUG] Processing request: PUT /api/orders/56789
+2024-07-24 22:48:32 [INFO] Order '56789' updated successfully
+2024-07-24 22:49:07 [ERROR] An error occurred while processing the request: Out of stock
+2024-08-28 00:56:57 [INFO] Application started
+2024-08-28 00:58:23 [DEBUG] Processing request: GET /api/users
+2024-08-28 00:58:34 [ERROR] An error occurred while processing the request: User not found
+2024-08-28 00:59:08 [INFO] User 'james.anderson' logged in
+2024-08-28 00:59:45 [WARNING] Invalid input received: Missing required field 'password'
+2024-08-28 01:00:10 [INFO] User 'james.anderson' logged out 
+2024-09-30 03:07:00 [INFO] Application started
+2024-09-30 03:08:26 [DEBUG] Processing request: GET /api/products
+2024-09-30 03:08:37 [INFO] Product '23456' retrieved successfully
+2024-09-30 03:09:06 [DEBUG] Processing request: DELETE /api/products/23456
+2024-09-30 03:09:08 [INFO] Product '23456' deleted successfully
+2024-09-30 03:09:25 [ERROR] An error occurred while processing the request: Database connection failed
+2024-11-04 05:17:15 [INFO] Application started
+2024-11-04 05:18:42 [DEBUG] Processing request: POST /api/users
+2024-11-04 05:18:49 [INFO] User 'lucy.miller' created successfully
+2024-11-04 05:19:27 [DEBUG] Processing request: PUT /api/users/lucy.miller
+2024-11-04 05:19:29 [INFO] User 'lucy.miller' updated successfully
+2024-11-04 05:20:06 [ERROR] An error occurred while processing the request: Email already exists
+2024-12-09 07:27:56 [INFO] Application started
+2024-12-09 07:29:23 [DEBUG] Processing request: GET /api/products
+2024-12-09 07:29:34 [INFO] Product '67890' retrieved successfully
+2024-12-09 07:30:03 [DEBUG] Processing request: DELETE /api/products/67890
+2024-12-09 07:30:05 [INFO] Product '67890' deleted successfully
+2024-12-09 07:30:22 [ERROR] An error occurred while processing the request: File not found
